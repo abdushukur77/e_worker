@@ -121,7 +121,7 @@ class _TabBoxScreenState extends State<TabBoxScreen> {
                                   duration: const Duration(seconds: 1),
                                   curve: Curves.fastLinearToSlowEaseIn,
                                   child: Text(
-                                    index == currentIndex ? listOfStrings[index] : '',
+                                    index == currentIndex ? listOfStrings[index] :'',
                                     style: const TextStyle(
                                       color: Colors.blueAccent,
                                       fontWeight: FontWeight.w600,
