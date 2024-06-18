@@ -145,6 +145,7 @@ class _TabBoxScreenState extends State<TabBoxScreen> {
                                       ? Colors.blueAccent
                                       : Colors.black26,
                                 ),
+
                               ],
                             ),
                           ],
