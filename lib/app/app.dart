@@ -43,7 +43,6 @@ class App extends StatelessWidget {
                 categoriesRepository: context.read<CategoriesRepository>())
               ..add(GetCategories()),
           ),
-
         ],
         child: ScreenUtilInit(
           designSize: const Size(428, 926),
