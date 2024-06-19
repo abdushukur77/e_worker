@@ -1,9 +1,23 @@
+import 'package:flutter/services.dart';
+
+import '../colors/app_colors.dart';
+
 class AppConstants {
   static RegExp passwordRegExp =
       RegExp(r'^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$');
   static RegExp textRegExp = RegExp(r"^[A-Z][a-zA-Z]*");
 
+  static const String vacancyTable = 'vacancy_table_best_developers';
+  static String resumesTable = "resumes_table_best_developers";
+  static String categories = "categories";
+  static String banners = "banners";
+  static String subCategories = "sub_categories";
+  static String savedJobs = "saved_jobs_best_developers";
+  static String topicName = "users";
 
+  static SystemUiOverlayStyle getOverlayStyle() => const SystemUiOverlayStyle(
+    statusBarColor: AppColors.transparent,
+  );
   static const List<String> countries = [
     "Uzbekistan",
     "Afghanistan",
