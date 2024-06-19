@@ -155,24 +155,6 @@ class VacancyBloc extends Bloc<VacancyEvent, VacancyState> {
         );
         vacancyModel = vacancyModel.copyWith(vacancyId: event.value as String);
         break;
-      case VacancyField.workTime:
-        UtilityFunctions.methodPrint(
-          "UPDATED VACANCY FIELD IS: ${event.field}, VALUE IS: ${event.value}",
-        );
-        vacancyModel = vacancyModel.copyWith(workTime: event.value as String);
-        break;
-      case VacancyField.lat:
-        UtilityFunctions.methodPrint(
-          "UPDATED VACANCY FIELD IS: ${event.field}, VALUE IS: ${event.value}",
-        );
-        vacancyModel = vacancyModel.copyWith(lat: event.value as double);
-        break;
-      case VacancyField.long:
-        UtilityFunctions.methodPrint(
-          "UPDATED VACANCY FIELD IS: ${event.field}, VALUE IS: ${event.value}",
-        );
-        vacancyModel = vacancyModel.copyWith(long: event.value as double);
-        break;
       case VacancyField.brandImage:
         UtilityFunctions.methodPrint(
           "UPDATED VACANCY FIELD IS: ${event.field}, VALUE IS: ${event.value}",
@@ -203,13 +185,7 @@ class VacancyBloc extends Bloc<VacancyEvent, VacancyState> {
         );
         vacancyModel = vacancyModel.copyWith(jobTitle: event.value as String);
         break;
-      case VacancyField.requiredLevel:
-        UtilityFunctions.methodPrint(
-          "UPDATED VACANCY FIELD IS: ${event.field}, VALUE IS: ${event.value}",
-        );
-        vacancyModel =
-            vacancyModel.copyWith(requiredLevel: event.value as String);
-        break;
+
       case VacancyField.description:
         UtilityFunctions.methodPrint(
           "UPDATED VACANCY FIELD IS: ${event.field}, VALUE IS: ${event.value}",
@@ -228,38 +204,13 @@ class VacancyBloc extends Bloc<VacancyEvent, VacancyState> {
           "UPDATED VACANCY FIELD IS: ${event.field}, VALUE IS: ${event.value}",
         );
         vacancyModel =
-            vacancyModel.copyWith(recruiterPhone: event.value as List<String>);
-        break;
-      case VacancyField.telegramUrl:
-        UtilityFunctions.methodPrint(
-          "UPDATED VACANCY FIELD IS: ${event.field}, VALUE IS: ${event.value}",
-        );
-        vacancyModel =
-            vacancyModel.copyWith(telegramUrl: event.value as String);
+            vacancyModel.copyWith(phone: event.value as String);
         break;
       case VacancyField.currency:
         UtilityFunctions.methodPrint(
           "UPDATED VACANCY FIELD IS: ${event.field}, VALUE IS: ${event.value}",
         );
         vacancyModel = vacancyModel.copyWith(currency: event.value as String);
-        break;
-      case VacancyField.offeredSalaryFrom:
-        UtilityFunctions.methodPrint(
-          "UPDATED VACANCY FIELD IS: ${event.field}, VALUE IS: ${event.value}",
-        );
-        vacancyModel = vacancyModel.copyWith(offeredSalaryFrom: event.value);
-        break;
-      case VacancyField.position:
-        UtilityFunctions.methodPrint(
-          "UPDATED VACANCY FIELD IS: ${event.field}, VALUE IS: ${event.value}",
-        );
-        vacancyModel = vacancyModel.copyWith(position: event.value);
-        break;
-      case VacancyField.offeredSalaryTo:
-        UtilityFunctions.methodPrint(
-          "UPDATED VACANCY FIELD IS: ${event.field}, VALUE IS: ${event.value}",
-        );
-        vacancyModel = vacancyModel.copyWith(offeredSalaryTo: event.value);
         break;
       case VacancyField.fromWhere:
         UtilityFunctions.methodPrint(
@@ -279,6 +230,13 @@ class VacancyBloc extends Bloc<VacancyEvent, VacancyState> {
         );
         vacancyModel =
             vacancyModel.copyWith(subCategoryId: event.value as String);
+        break;
+      case VacancyField.position:
+        UtilityFunctions.methodPrint(
+          "UPDATED VACANCY FIELD IS: ${event.field}, VALUE IS: ${event.value}",
+        );
+        vacancyModel =
+            vacancyModel.copyWith(position: event.value as String);
         break;
     }
 

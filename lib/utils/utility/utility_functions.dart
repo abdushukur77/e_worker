@@ -19,11 +19,23 @@ class UtilityFunctions {
 
   static void printVacancy(VacancyModel vacancyModel) {
     methodPrint(
-      "CURRENT VACANCY: LAT: ${vacancyModel.lat}, LONG: ${vacancyModel.long} isValid: ${vacancyModel.isValid} fromWhere: ${vacancyModel.fromWhere} offeredSalaryTo: ${vacancyModel.offeredSalaryTo} offeredSalaryFrom: ${vacancyModel.offeredSalaryFrom} level: ${vacancyModel.requiredLevel} currency: ${vacancyModel.currency} telegramUrl: ${vacancyModel.telegramUrl} recruiterPhone: ${vacancyModel.recruiterPhone} jobType: ${vacancyModel.jobType} description: ${vacancyModel.description} requiredLevel: ${vacancyModel.requiredLevel} jobTitle: ${vacancyModel.jobTitle} createdAt: ${vacancyModel.createdAt} userId: ${vacancyModel.userId} subCategoryId: ${vacancyModel.subCategoryId} position: ${vacancyModel.position} categoryId: ${vacancyModel.categoryId} brandImage: ${vacancyModel.brandImage},",
+      " isValid: ${vacancyModel.isValid} "
+          "fromWhere: ${vacancyModel.fromWhere} "
+          "currency: ${vacancyModel.currency} "
+          "recruiterPhone: ${vacancyModel.phone} "
+          "jobType: ${vacancyModel.jobType} "
+          "description: ${vacancyModel.description}"
+          " jobTitle: ${vacancyModel.jobTitle}"
+          " createdAt: ${vacancyModel.createdAt} "
+          "userId: ${vacancyModel.userId} "
+          "subCategoryId: ${vacancyModel.subCategoryId}"
+          " position:${vacancyModel.position} "
+          "categoryId: ${vacancyModel.categoryId} "
+          "brandImage: ${vacancyModel.brandImage},",
     );
-    for (int i = 0; i < vacancyModel.recruiterPhone.length; i++) {
+    for (int i = 0; i < vacancyModel.phone.length; i++) {
       methodPrint(
-          "CURRENT VACANCY PHONE NUMBER IS: ${vacancyModel.recruiterPhone[i]}");
+          "CURRENT VACANCY PHONE NUMBER IS: ${vacancyModel.phone[i]}");
     }
   }
 
