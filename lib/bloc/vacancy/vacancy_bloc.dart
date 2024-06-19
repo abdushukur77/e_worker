@@ -147,7 +147,6 @@ class VacancyBloc extends Bloc<VacancyEvent, VacancyState> {
 
   _updateField(UpdateVacancyFieldEvent event, Emitter<VacancyState> emit) {
     VacancyModel vacancyModel = VacancyModel.initial();
-
     switch (event.field) {
       case VacancyField.vacancyId:
         UtilityFunctions.methodPrint(
@@ -159,7 +158,7 @@ class VacancyBloc extends Bloc<VacancyEvent, VacancyState> {
         UtilityFunctions.methodPrint(
           "UPDATED VACANCY FIELD IS: ${event.field}, VALUE IS: ${event.value}",
         );
-        vacancyModel = vacancyModel.copyWith(brandImage: event.value as String);
+        vacancyModel = vacancyModel.copyWith(brandImage: event.value as List<String>);
         break;
       case VacancyField.categoryId:
         UtilityFunctions.methodPrint(

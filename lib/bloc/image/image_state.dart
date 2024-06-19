@@ -8,7 +8,7 @@ class ImageInitial extends ImageState {}
 class ImageLoading extends ImageState {}
 
 class ImageSuccess extends ImageState {
-  final String imageUrl;
+  final List<String> imageUrl;
 
   ImageSuccess(this.imageUrl);
 }

@@ -1,6 +1,6 @@
 class VacancyModel {
   final String vacancyId;
-  final String brandImage;
+  final List<String> brandImage;
   final String categoryId;
   final String position;
   final String subCategoryId;
@@ -35,7 +35,7 @@ class VacancyModel {
         vacancyId: json['vacancy_id'] as String? ?? '',
         subCategoryId: json['sub_category_id'] as String? ?? '',
         categoryId: json['category_id'] as String? ?? '',
-        brandImage: json['brand_image_url'] as String? ?? '',
+        brandImage: json['brand_image_url'] as List<String>? ?? [],
         createdAt: json['created_at'] as String? ?? '',
         description: json['description'] as String? ?? '',
         fromWhere: json['from_where'] as int? ?? 0,
@@ -82,7 +82,7 @@ class VacancyModel {
 
   VacancyModel copyWith({
     String? vacancyId,
-    String? brandImage,
+    List<String>? brandImage,
     String? categoryId,
     String? userId,
     String? createdAt,
@@ -119,7 +119,7 @@ class VacancyModel {
   static VacancyModel initial() => VacancyModel(
         vacancyId: "",
         categoryId: "",
-        brandImage: "",
+        brandImage: [],
         createdAt: "",
         description: "",
         fromWhere: 0,
