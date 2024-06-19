@@ -3,6 +3,7 @@ import 'package:e_worker/screens/tab_box/home_screen/home_screen.dart';
 import 'package:e_worker/screens/tab_box/profile_screen/profile_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 
 class TabBoxScreen extends StatefulWidget {
@@ -79,13 +80,13 @@ class _TabBoxScreenState extends State<TabBoxScreen> {
                           AnimatedContainer(
                             duration: const Duration(seconds: 1),
                             curve: Curves.fastLinearToSlowEaseIn,
-                            width: index == currentIndex ? width * .32 : width * .27,
+                            width: index == currentIndex ? width * .32 : width * .50,
                             alignment: Alignment.center,
                             child: AnimatedContainer(
                               duration: const Duration(seconds: 1),
                               curve: Curves.fastLinearToSlowEaseIn,
                               height: index == currentIndex ? width * .12 : 0,
-                              width: index == currentIndex ? width * .32 : 0,
+                              width: index == currentIndex ? width * .50 : 0,
                               decoration: BoxDecoration(
                                 color: index == currentIndex
                                     ? Colors.blueAccent.withOpacity(.2)
@@ -94,10 +95,12 @@ class _TabBoxScreenState extends State<TabBoxScreen> {
                               ),
                             ),
                           ),
+                          SizedBox(width: 100.w),
+
                           AnimatedContainer(
                             duration: const Duration(seconds: 1),
                             curve: Curves.fastLinearToSlowEaseIn,
-                            width: index == currentIndex ? width * .31 : width * .18,
+                            width: index == currentIndex ? width * .31 : width * .50,
                             alignment: Alignment.center,
                             child: Stack(
                               children: [
@@ -123,6 +126,7 @@ class _TabBoxScreenState extends State<TabBoxScreen> {
                                     ),
                                   ],
                                 ),
+
                                 Row(
                                   children: [
                                     AnimatedContainer(
