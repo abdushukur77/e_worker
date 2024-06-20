@@ -29,6 +29,8 @@ class _CreateScreenState extends State<CreateScreen> {
   TextEditingController yonalishController = TextEditingController();
   TextEditingController hasImage = TextEditingController();
 
+  VacancyModel vacancyModel = VacancyModel.initial();
+
   bool isButtonEnabled = false;
 
   void _validateForm() {
@@ -58,6 +60,41 @@ class _CreateScreenState extends State<CreateScreen> {
     super.dispose();
   }
 
+  void _showConfirmationDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Confirmation'),
+          content: const Text('Do you want to proceed?'),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+
+                Navigator.of(context).pop(); // Close the dialog
+                context.read<VacancyBloc>().add(
+                  AddVacancyEvent(
+                    vacancyModel:vacancyModel,
+                  ),
+                );
+                print('Yes');
+              },
+              child: const Text('Yes'),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop(); // Close the dialog
+                // Handle the "No" action here
+                print('No');
+              },
+              child: const Text('No'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -77,21 +114,19 @@ class _CreateScreenState extends State<CreateScreen> {
                   ),
                   LocationWidget(locationController: locationController),
                   Padding(
-                    padding:
-                        EdgeInsets.symmetric(horizontal: 24.w, vertical: 24.h),
+                    padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 24.h),
                     child: TextFormField(
-                      style: AppTextStyle.urbanistRegular
-                          .copyWith(fontSize: 14, color: AppColors.black),
+                      style: AppTextStyle.urbanistRegular.copyWith(fontSize: 14, color: AppColors.black),
                       onChanged: (v) {
                         if (v.length == 12) {
-                          FocusManager.instance.primaryFocus!.unfocus();
+                          FocusManager.instance.primaryFocus?.unfocus();
                         }
                         context.read<VacancyBloc>().add(
-                              UpdateVacancyFieldEvent(
-                                value: phoneController.text,
-                                field: VacancyField.recruiterPhone,
-                              ),
-                            );
+                          UpdateVacancyFieldEvent(
+                            value: phoneController.text,
+                            field: VacancyField.recruiterPhone,
+                          ),
+                        );
                       },
                       inputFormatters: [AppInputFormatters.phoneFormatter],
                       textInputAction: TextInputAction.next,
@@ -109,8 +144,7 @@ class _CreateScreenState extends State<CreateScreen> {
                         fillColor: Colors.white,
                         enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(12),
-                          borderSide:
-                              const BorderSide(color: Colors.transparent),
+                          borderSide: const BorderSide(color: Colors.transparent),
                         ),
                         focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(12),
@@ -125,8 +159,7 @@ class _CreateScreenState extends State<CreateScreen> {
                           borderSide: const BorderSide(color: Colors.red),
                         ),
                         isDense: true,
-                        contentPadding:
-                            EdgeInsets.only(top: 17.h, bottom: 17.h),
+                        contentPadding: EdgeInsets.only(top: 17.h, bottom: 17.h),
                         prefixIcon: SizedBox(
                           width: 85.w,
                           child: Row(
@@ -148,23 +181,19 @@ class _CreateScreenState extends State<CreateScreen> {
                   ),
                   TakeImageWidget(hasImage: hasImage),
                   Padding(
-                    padding:
-                        EdgeInsets.symmetric(horizontal: 24.w, vertical: 16.h),
+                    padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 16.h),
                     child: TextFormField(
                       maxLines: null,
                       decoration: InputDecoration(
                         hintText: "Enter ",
-                        contentPadding: EdgeInsets.symmetric(
-                            horizontal: 10.w, vertical: 13.h),
+                        contentPadding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 13.h),
                         focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(16.w),
-                          borderSide:
-                              BorderSide(width: 1.w, color: Colors.black),
+                          borderSide: BorderSide(width: 1.w, color: Colors.black),
                         ),
                         enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(16.w),
-                          borderSide:
-                              BorderSide(width: 1.w, color: Colors.black),
+                          borderSide: BorderSide(width: 1.w, color: Colors.black),
                         ),
                       ),
                     ),
@@ -175,33 +204,27 @@ class _CreateScreenState extends State<CreateScreen> {
                     child: TextButton(
                       onPressed: isButtonEnabled
                           ? () {
-                              context.read<VacancyBloc>().add(
-                                    AddVacancyEvent(
-                                      vacancyModel: state.vacancyModel,
-                                    ),
-                                  );
-
-                              context
-                                  .read<VacancyBloc>()
-                                  .add(ChangeToInitialState());
-
-                              context
-                                  .read<ImageBloc>()
-                                  .add(ChangeInitialState());
-                              Navigator.pop(context);
-
-                              debugPrint(
-                                  "QQQQQQQQQQQQQQQQQQQQQQQq ${fieldController.text},${yonalishController.text},${locationController.text},${phoneController.text},${hasImage.text},`");
-                            }
+                        context.read<VacancyBloc>().add(
+                          AddVacancyEvent(
+                            vacancyModel: vacancyModel.copyWith(
+                              position: locationController.text,
+                              description: fieldController.text,
+                              phone: phoneController.text,
+                              brandImage: context.read<VacancyBloc>().state.vacancyModel.brandImage,
+                              categoryId: context.read<VacancyBloc>().state.vacancyModel.categoryId,
+                              subCategoryId: context.read<VacancyBloc>().state.vacancyModel.subCategoryId,
+                            ),
+                          ),
+                        );
+                        _showConfirmationDialog(context);
+                      }
                           : null,
                       style: TextButton.styleFrom(
-                        backgroundColor:
-                            isButtonEnabled ? AppColors.c257CFF : Colors.grey,
+                        backgroundColor: isButtonEnabled ? AppColors.c257CFF : Colors.grey,
                       ),
                       child: Text(
                         "Saqlash",
-                        style: AppTextStyle.urbanistMedium
-                            .copyWith(color: AppColors.white, fontSize: 16.w),
+                        style: AppTextStyle.urbanistMedium.copyWith(color: AppColors.white, fontSize: 16.w),
                       ),
                     ),
                   )

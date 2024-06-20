@@ -17,7 +17,7 @@ class VacancyBloc extends Bloc<VacancyEvent, VacancyState> {
     on<GetVacancyEvent>(_getVacancy);
     on<ChangePhoneStateEvent>(_updatePhoneState);
     on<GetVacanciesByCategoryId>(_getVacanciesByCategoryId);
-    // on<GetVacanciesBySubCategoryId>(_getVacanciesBySubCategoryId);
+    on<GetVacanciesBySubCategoryId>(_getVacanciesBySubCategoryId);
     on<ChangeToInitialState>(_changeToInitialState);
   }
 
@@ -35,67 +35,66 @@ class VacancyBloc extends Bloc<VacancyEvent, VacancyState> {
     ));
   }
 
-  Future<void> _getVacanciesByCategoryId(GetVacanciesByCategoryId event,
-      emit) async {
+  Future<void> _getVacanciesByCategoryId(
+      GetVacanciesByCategoryId event, emit) async {
     emit(state.copyWith(status: FormsStatus.loading));
 
-    // NetworkResponse response = await vacancyRepository.getVacanciesByCategoryId(event.categoryId);
+    NetworkResponse response =
+        await vacancyRepository.getVacanciesByCategoryId(event.categoryId);
 
-    // if (response.errorText.isEmpty) {
-    //   List<VacancyModel> vacancies = response.data as List<VacancyModel>;
-    //   emit(state.copyWith(vacancies: vacancies, status: FormsStatus.success));
-    // } else {
-    //   emit(state.copyWith(
-    //       status: FormsStatus.error, errorMessage: response.errorText));
-    // }
+    if (response.errorText.isEmpty) {
+      List<VacancyModel> vacancies = response.data as List<VacancyModel>;
+      emit(state.copyWith(vacancies: vacancies, status: FormsStatus.success));
+    } else {
+      emit(state.copyWith(
+          status: FormsStatus.error, errorMessage: response.errorText));
+    }
   }
 
-  //
-  // Future<void> _getVacanciesBySubCategoryId(
-  //   //   GetVacanciesBySubCategoryId event, emit) async {
-  //   // emit(state.copyWith(status: FormsStatus.loading));
-  //   //
-  //   // NetworkResponse response = await vacancyRepository
-  //   //     .getVacanciesBySubCategoryId(event.subCategoryId);
-  //   //
-  //   // if (response.errorText.isEmpty) {
-  //   //   List<VacancyModel> vacancies = response.data as List<VacancyModel>;
-  //   //   emit(state.copyWith(vacancies: vacancies, status: FormsStatus.success));
-  //   // } else {
-  //   //   emit(state.copyWith(
-  //   //       status: FormsStatus.error, errorMessage: response.errorText));
-  //   // }
-  // // }
-  //
-  // // void _getVacancyForFilter(GetVacancyForFilterEvent event, emit) {
-  // //   emit(
-  // //     state.copyWith(
-  // //         vacanciesForFilter: state.vacancies.where(
-  // //       (vacancies) {
-  // //         return vacancies.subCategoryId == event.filterModel.subCategoryId;
-  // //       },
-  // //     ).toList()),
-  //   );
+  Future<void> _getVacanciesBySubCategoryId(
+      GetVacanciesBySubCategoryId event, emit) async {
+    emit(state.copyWith(status: FormsStatus.loading));
 
+    NetworkResponse response = await vacancyRepository
+        .getVacanciesBySubCategoryId(event.subCategoryId);
+
+    if (response.errorText.isEmpty) {
+      List<VacancyModel> vacancies = response.data as List<VacancyModel>;
+      emit(state.copyWith(vacancies: vacancies, status: FormsStatus.success));
+    } else {
+      emit(state.copyWith(
+          status: FormsStatus.error, errorMessage: response.errorText));
+    }
+  }
+
+  // void _getVacancyForFilter(GetVacancyForFilterEvent event, emit) {
+  //   emit(
+  //     state.copyWith(
+  //         vacanciesForFilter: state.vacancies.where(
+  //       (vacancies) {
+  //         return vacancies.subCategoryId == event.filterModel.subCategoryId;
+  //       },
+  //     ).toList()),
+  //   );
+  // }
 
   _updatePhoneState(ChangePhoneStateEvent event, emit) {
-    // emit(
-    //   state.copyWith(
-    //     isSecond: event.isSecondPhone,
-    //   ),
-    // );
-    // UtilityFunctions.methodPrint(
-    //   'CURRENT PHONE STATE IS: ${event.isSecondPhone}',
-    // );
+    emit(
+      state.copyWith(
+        isSecond: event.isSecondPhone,
+      ),
+    );
+    UtilityFunctions.methodPrint(
+      'CURRENT PHONE STATE IS: ${event.isSecondPhone}',
+    );
   }
 
   _insertVacancy(AddVacancyEvent event, emit) async {
     emit(state.copyWith(status: FormsStatus.loading, statusMessage: ""));
     NetworkResponse networkResponse =
-    await vacancyRepository.addVacancy(state.vacancyModel);
+        await vacancyRepository.addVacancy(state.vacancyModel);
     if (networkResponse.errorText.isEmpty) {
       VacancyModel vacancyModel = networkResponse.data as VacancyModel;
-
 
       emit(state.copyWith(
           status: FormsStatus.success,
@@ -199,10 +198,8 @@ class VacancyBloc extends Bloc<VacancyEvent, VacancyState> {
         UtilityFunctions.methodPrint(
           "UPDATED VACANCY FIELD IS: ${event.field}, VALUE IS: ${event.value}",
         );
-        vacancyModel =
-            vacancyModel.copyWith(phone: event.value as String);
+        vacancyModel = vacancyModel.copyWith(phone: event.value as String);
         break;
-
 
       case VacancyField.isValid:
         UtilityFunctions.methodPrint(
@@ -221,8 +218,7 @@ class VacancyBloc extends Bloc<VacancyEvent, VacancyState> {
         UtilityFunctions.methodPrint(
           "UPDATED VACANCY FIELD IS: ${event.field}, VALUE IS: ${event.value}",
         );
-        vacancyModel =
-            vacancyModel.copyWith(position: event.value as String);
+        vacancyModel = vacancyModel.copyWith(position: event.value as String);
         break;
     }
 
@@ -265,5 +261,4 @@ class VacancyBloc extends Bloc<VacancyEvent, VacancyState> {
     // );
     // }
   }
-
 }
