@@ -9,7 +9,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 
 class LocationWidget extends StatefulWidget {
-  const LocationWidget({super.key});
+  const LocationWidget({super.key, required this.locationController});
+
+  final TextEditingController locationController ;
 
   @override
   State<LocationWidget> createState() => _LocationWidgetState();
@@ -68,10 +70,14 @@ class _LocationWidgetState extends State<LocationWidget> {
                       children: <Widget>[
                         ...List.generate(country.length, (index){
                           return YonalishTuri(onTap: (){
+
                             location=country[index];
                             setState(() {});
+
+                            widget.locationController.text=location;
                             Navigator.pop(context);
-                          }, title:country[index], color:(location!=country[index])?Colors.blue.withOpacity(0.6):Colors.blue);
+                          }, isActive: location==country[index],title:country[index], color:(location!=country[index])?Colors.white:Colors.blue);
+
                         }),
                         const SizedBox(height: 20),
                         ElevatedButton(

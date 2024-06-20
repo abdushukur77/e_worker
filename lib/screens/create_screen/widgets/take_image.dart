@@ -12,7 +12,8 @@ import '../../../data/model/vacancy/vacancy_model.dart';
 import '../../../utils/size/size_utils.dart';
 
 class TakeImageWidget extends StatefulWidget {
-  const TakeImageWidget({super.key});
+  const TakeImageWidget({super.key, required this.hasImage});
+   final TextEditingController hasImage;
 
   @override
   State<TakeImageWidget> createState() => _TakeImageWidgetState();
@@ -35,6 +36,8 @@ class _TakeImageWidgetState extends State<TakeImageWidget> {
               );
             }
             if (state is ImageSuccess) {
+              widget.hasImage.text=imageUrl[0];
+
               return Center(
                 child: SizedBox(
                   height: 150.h,
@@ -125,9 +128,10 @@ class _TakeImageWidgetState extends State<TakeImageWidget> {
   }
 
   Future<void> _getImageFromCamera() async {
-    final List<XFile>? images = await picker.pickMultiImage(
+    final List<XFile> images = await picker.pickMultiImage(
       maxHeight: 1024,
       maxWidth: 1024,
+      limit: 2,
     );
     if (images != null && images.isNotEmpty && context.mounted) {
       for (var image in images.take(2)) {
@@ -144,7 +148,7 @@ class _TakeImageWidgetState extends State<TakeImageWidget> {
   }
 
   Future<void> _getImageFromGallery() async {
-    final List<XFile>? images = await picker.pickMultiImage(
+    final List<XFile> images = await picker.pickMultiImage(
       maxHeight: 1024,
       maxWidth: 1024,
     );

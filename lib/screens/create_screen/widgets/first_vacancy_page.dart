@@ -1,5 +1,6 @@
 import 'package:e_worker/screens/create_screen/widgets/soha_turi.dart';
 import 'package:e_worker/screens/create_screen/widgets/yonalish_turi.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -15,9 +16,10 @@ import '../../../bloc/vacancy/vacancy_state.dart';
 import '../../../data/model/vacancy/vacancy_model.dart';
 
 class FirstVacancyPage extends StatefulWidget {
-  const FirstVacancyPage({super.key, required this.fieldController});
+  const FirstVacancyPage({super.key, required this.fieldController, required this.yonalishControler});
 
   final TextEditingController fieldController;
+  final TextEditingController yonalishControler;
 
   @override
   State<FirstVacancyPage> createState() => _FirstVacancyPageState();
@@ -105,14 +107,12 @@ class _FirstVacancyPageState extends State<FirstVacancyPage> {
                                                     state.categories.length,
                                                     (index) {
                                                   return SohaTuri(
+                                                    isActive:field == state
+                                                        .categories[index]
+                                                        .name,
                                                     onTap: () {
                                                       setState(() {
-
-                                                        currentCategoryId =
-                                                            state
-                                                                .categories[
-                                                                    index]
-                                                                .id;
+                                                        currentCategoryId = state.categories[index].id;
                                                         field = state
                                                             .categories[index]
                                                             .name;
@@ -124,11 +124,10 @@ class _FirstVacancyPageState extends State<FirstVacancyPage> {
                                                           .read<VacancyBloc>()
                                                           .add(
                                                             UpdateVacancyFieldEvent(
-                                                              value:
-                                                                  currentCategoryId,
-                                                              field: VacancyField
-                                                                  .categoryId,
+                                                              value:currentCategoryId,
+                                                              field: VacancyField.categoryId,
                                                             ),
+
                                                           );
                                                       context
                                                           .read<
@@ -136,6 +135,7 @@ class _FirstVacancyPageState extends State<FirstVacancyPage> {
                                                           .add(GetSubCategories(
                                                               parentId:
                                                                   currentCategoryId));
+
                                                       Navigator.of(context)
                                                           .pop();
                                                     },
@@ -147,8 +147,7 @@ class _FirstVacancyPageState extends State<FirstVacancyPage> {
                                                                     index]
                                                                 .id
                                                         ? AppColors.c257CFF
-                                                        : AppColors.c257CFF
-                                                            .withOpacity(0.6),
+                                                        : Colors.white,
                                                   );
                                                 }),
                                                 const SizedBox(height: 20),
@@ -240,6 +239,10 @@ class _FirstVacancyPageState extends State<FirstVacancyPage> {
                                                 ...List.generate(
                                                     state.subCategories.length,
                                                     (index) => YonalishTuri(
+                                                      isActive: direction == state
+                                                          .subCategories[
+                                                      index]
+                                                          .name ,
                                                           onTap: () {
                                                             setState(() {
                                                               subCategoryId = state
@@ -250,6 +253,9 @@ class _FirstVacancyPageState extends State<FirstVacancyPage> {
                                                                   .subCategories[
                                                                       index]
                                                                   .name;
+
+                                                              widget.yonalishControler.text=direction;
+
                                                             });
 
                                                             context
@@ -280,10 +286,7 @@ class _FirstVacancyPageState extends State<FirstVacancyPage> {
                                                                   subCategoryId
                                                               ? AppColors
                                                                   .c257CFF
-                                                              : AppColors
-                                                                  .c257CFF
-                                                                  .withOpacity(
-                                                                      0.6),
+                                                              : Colors.white,
                                                         )),
                                                 const SizedBox(height: 20),
                                                 ElevatedButton(

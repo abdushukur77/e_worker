@@ -7,11 +7,11 @@ class AppConstants {
       RegExp(r'^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$');
   static RegExp textRegExp = RegExp(r"^[A-Z][a-zA-Z]*");
 
-  static const String vacancyTable = 'vacancy_table_best_developers';
+  static const String vacancyTable = 'vacancies';
   static String resumesTable = "resumes_table_best_developers";
   static String categories = "categories";
   static String banners = "banners";
-  static String subCategories = "sub_categories";
+  static String subCategories = "subcategories";
   static String savedJobs = "saved_jobs_best_developers";
   static String topicName = "users";
 
