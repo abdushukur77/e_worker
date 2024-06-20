@@ -5,6 +5,7 @@ import 'package:e_worker/screens/create_screen/widgets/location.dart';
 import 'package:e_worker/screens/create_screen/widgets/take_image.dart';
 import 'package:e_worker/utils/colors/app_colors.dart';
 import 'package:e_worker/utils/styles/app_text_style.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -27,10 +28,9 @@ class _CreateScreenState extends State<CreateScreen> {
   TextEditingController fieldController = TextEditingController();
   TextEditingController locationController = TextEditingController();
   TextEditingController yonalishController = TextEditingController();
+  TextEditingController informationController=TextEditingController();
   TextEditingController hasImage = TextEditingController();
-
   VacancyModel vacancyModel = VacancyModel.initial();
-
   bool isButtonEnabled = false;
 
   void _validateForm() {
@@ -42,7 +42,6 @@ class _CreateScreenState extends State<CreateScreen> {
   @override
   void initState() {
     super.initState();
-
     phoneController.addListener(_validateForm);
     fieldController.addListener(_validateForm);
     locationController.addListener(_validateForm);
@@ -60,40 +59,40 @@ class _CreateScreenState extends State<CreateScreen> {
     super.dispose();
   }
 
-  void _showConfirmationDialog(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: const Text('Confirmation'),
-          content: const Text('Do you want to proceed?'),
-          actions: <Widget>[
-            TextButton(
-              onPressed: () {
-
-                Navigator.of(context).pop(); // Close the dialog
-                context.read<VacancyBloc>().add(
-                  AddVacancyEvent(
-                    vacancyModel:vacancyModel,
-                  ),
-                );
-                print('Yes');
-              },
-              child: const Text('Yes'),
-            ),
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop(); // Close the dialog
-                // Handle the "No" action here
-                print('No');
-              },
-              child: const Text('No'),
-            ),
-          ],
-        );
-      },
-    );
-  }
+  // void _showConfirmationDialog(BuildContext context) {
+  //   showDialog(
+  //     context: context,
+  //     builder: (BuildContext context) {
+  //       return AlertDialog(
+  //         title: const Text('Confirmation'),
+  //         content: const Text('Do you want to proceed?'),
+  //         actions: <Widget>[
+  //           TextButton(
+  //             onPressed: () {
+  //
+  //               Navigator.of(context).pop(); // Close the dialog
+  //               context.read<VacancyBloc>().add(
+  //                 AddVacancyEvent(
+  //                   vacancyModel:vacancyModel,
+  //                 ),
+  //               );
+  //               print('Yes');
+  //             },
+  //             child: const Text('Yes'),
+  //           ),
+  //           TextButton(
+  //             onPressed: () {
+  //               Navigator.of(context).pop(); // Close the dialog
+  //               // Handle the "No" action here
+  //               print('No');
+  //             },
+  //             child: const Text('No'),
+  //           ),
+  //         ],
+  //       );
+  //     },
+  //   );
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -184,6 +183,7 @@ class _CreateScreenState extends State<CreateScreen> {
                     padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 16.h),
                     child: TextFormField(
                       maxLines: null,
+                      controller: informationController,
                       decoration: InputDecoration(
                         hintText: "Enter ",
                         contentPadding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 13.h),
@@ -205,18 +205,26 @@ class _CreateScreenState extends State<CreateScreen> {
                       onPressed: isButtonEnabled
                           ? () {
                         context.read<VacancyBloc>().add(
-                          AddVacancyEvent(
-                            vacancyModel: vacancyModel.copyWith(
-                              position: locationController.text,
-                              description: fieldController.text,
-                              phone: phoneController.text,
-                              brandImage: context.read<VacancyBloc>().state.vacancyModel.brandImage,
-                              categoryId: context.read<VacancyBloc>().state.vacancyModel.categoryId,
-                              subCategoryId: context.read<VacancyBloc>().state.vacancyModel.subCategoryId,
-                            ),
-                          ),
+                          UpdateVacancyFieldEvent(value:informationController.text, field:VacancyField.description),
                         );
-                        _showConfirmationDialog(context);
+                        context.read<VacancyBloc>().add(
+                          UpdateVacancyFieldEvent(value:locationController.text, field:VacancyField.position),
+                        );
+                        context.read<VacancyBloc>().add(
+                          UpdateVacancyFieldEvent(value:DateTime.now().toString(), field:VacancyField.createdAt),
+                        );
+                        context.read<VacancyBloc>().add(
+                          UpdateVacancyFieldEvent(value:yonalishController.text, field:VacancyField.jobTitle),
+                        );
+                        context.read<VacancyBloc>().add(
+                          AddVacancyEvent(vacancyModel:state.vacancyModel),
+                        );
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(content: Text("Muvaffaqqiyatli qo'shildi",style: AppTextStyle.urbanistMedium.copyWith(
+                            color: AppColors.white,fontSize: 14.sp
+                          ),),backgroundColor: Colors.green,duration:const Duration(seconds: 2),),
+                        );
+                        Navigator.pop(context);
                       }
                           : null,
                       style: TextButton.styleFrom(

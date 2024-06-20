@@ -112,12 +112,7 @@ class _FirstVacancyPageState extends State<FirstVacancyPage> {
                                                         .name,
                                                     onTap: () {
                                                       setState(() {
-
-                                                        currentCategoryId =
-                                                            state
-                                                                .categories[
-                                                                    index]
-                                                                .id;
+                                                        currentCategoryId = state.categories[index].id;
                                                         field = state
                                                             .categories[index]
                                                             .name;
@@ -140,6 +135,7 @@ class _FirstVacancyPageState extends State<FirstVacancyPage> {
                                                           .add(GetSubCategories(
                                                               parentId:
                                                                   currentCategoryId));
+
                                                       Navigator.of(context)
                                                           .pop();
                                                     },

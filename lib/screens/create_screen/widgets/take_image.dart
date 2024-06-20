@@ -88,7 +88,6 @@ class _TakeImageWidgetState extends State<TakeImageWidget> {
           },
           listener: (BuildContext context, ImageState state) {
             if (state is ImageSuccess) {
-
               imageUrl = state.imageUrl;
               debugPrint("CURRENT IMAGE: $imageUrl");
               context.read<VacancyBloc>().add(
@@ -129,10 +128,9 @@ class _TakeImageWidgetState extends State<TakeImageWidget> {
   }
 
   Future<void> _getImageFromCamera() async {
-    final List<XFile>? images = await picker.pickMultiImage(
+    final List<XFile> images = await picker.pickMultiImage(
       maxHeight: 1024,
       maxWidth: 1024,
-      imageQuality: 2,
       limit: 2,
     );
     if (images != null && images.isNotEmpty && context.mounted) {
@@ -153,7 +151,6 @@ class _TakeImageWidgetState extends State<TakeImageWidget> {
     final List<XFile> images = await picker.pickMultiImage(
       maxHeight: 1024,
       maxWidth: 1024,
-      imageQuality: 2,
     );
     if (images != null && images.isNotEmpty && context.mounted) {
       debugPrint("DOWNLOAD URL Gallery: $images");

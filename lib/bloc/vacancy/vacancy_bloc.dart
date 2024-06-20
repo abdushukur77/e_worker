@@ -38,10 +38,8 @@ class VacancyBloc extends Bloc<VacancyEvent, VacancyState> {
   Future<void> _getVacanciesByCategoryId(
       GetVacanciesByCategoryId event, emit) async {
     emit(state.copyWith(status: FormsStatus.loading));
-
     NetworkResponse response =
         await vacancyRepository.getVacanciesByCategoryId(event.categoryId);
-
     if (response.errorText.isEmpty) {
       List<VacancyModel> vacancies = response.data as List<VacancyModel>;
       emit(state.copyWith(vacancies: vacancies, status: FormsStatus.success));
@@ -146,7 +144,7 @@ class VacancyBloc extends Bloc<VacancyEvent, VacancyState> {
   }
 
   _updateField(UpdateVacancyFieldEvent event, Emitter<VacancyState> emit) {
-    VacancyModel vacancyModel = VacancyModel.initial();
+    VacancyModel vacancyModel =state.vacancyModel;
     switch (event.field) {
       case VacancyField.vacancyId:
         UtilityFunctions.methodPrint(
