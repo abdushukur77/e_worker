@@ -52,12 +52,10 @@ class _TabBoxScreenState extends State<TabBoxScreen> {
           Align(
             alignment: Alignment.bottomCenter,
             child: Container(
-              margin: EdgeInsets.symmetric(horizontal:width * 0.05),
+              // margin: EdgeInsets.symmetric(horizontal:width * 0.05),
               height: width * .155,
-              decoration: BoxDecoration(
+              decoration:const BoxDecoration(
                 color: Colors.white,
-
-                borderRadius: BorderRadius.circular(50),
               ),
               child: ListView.builder(
                 itemCount: 2,

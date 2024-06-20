@@ -76,9 +76,8 @@ class _LocationWidgetState extends State<LocationWidget> {
 
                             widget.locationController.text=location;
                             Navigator.pop(context);
+                          }, isActive: location==country[index],title:country[index], color:(location!=country[index])?Colors.white:Colors.blue);
 
-
-                          }, title:country[index], color:(location!=country[index])?Colors.blue.withOpacity(0.6):Colors.blue);
                         }),
                         const SizedBox(height: 20),
                         ElevatedButton(

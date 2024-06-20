@@ -11,7 +11,7 @@ class AppConstants {
   static String resumesTable = "resumes_table_best_developers";
   static String categories = "categories";
   static String banners = "banners";
-  static String subCategories = "sub_categories";
+  static String subCategories = "subcategories";
   static String savedJobs = "saved_jobs_best_developers";
   static String topicName = "users";
 

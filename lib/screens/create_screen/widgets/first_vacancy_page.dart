@@ -107,6 +107,9 @@ class _FirstVacancyPageState extends State<FirstVacancyPage> {
                                                     state.categories.length,
                                                     (index) {
                                                   return SohaTuri(
+                                                    isActive:field == state
+                                                        .categories[index]
+                                                        .name,
                                                     onTap: () {
                                                       setState(() {
 
@@ -126,10 +129,8 @@ class _FirstVacancyPageState extends State<FirstVacancyPage> {
                                                           .read<VacancyBloc>()
                                                           .add(
                                                             UpdateVacancyFieldEvent(
-                                                              value:
-                                                                  currentCategoryId,
-                                                              field: VacancyField
-                                                                  .categoryId,
+                                                              value:currentCategoryId,
+                                                              field: VacancyField.categoryId,
                                                             ),
 
                                                           );
@@ -150,8 +151,7 @@ class _FirstVacancyPageState extends State<FirstVacancyPage> {
                                                                     index]
                                                                 .id
                                                         ? AppColors.c257CFF
-                                                        : AppColors.c257CFF
-                                                            .withOpacity(0.6),
+                                                        : Colors.white,
                                                   );
                                                 }),
                                                 const SizedBox(height: 20),
@@ -243,6 +243,10 @@ class _FirstVacancyPageState extends State<FirstVacancyPage> {
                                                 ...List.generate(
                                                     state.subCategories.length,
                                                     (index) => YonalishTuri(
+                                                      isActive: direction == state
+                                                          .subCategories[
+                                                      index]
+                                                          .name ,
                                                           onTap: () {
                                                             setState(() {
                                                               subCategoryId = state
@@ -286,10 +290,7 @@ class _FirstVacancyPageState extends State<FirstVacancyPage> {
                                                                   subCategoryId
                                                               ? AppColors
                                                                   .c257CFF
-                                                              : AppColors
-                                                                  .c257CFF
-                                                                  .withOpacity(
-                                                                      0.6),
+                                                              : Colors.white,
                                                         )),
                                                 const SizedBox(height: 20),
                                                 ElevatedButton(

@@ -132,6 +132,8 @@ class _TakeImageWidgetState extends State<TakeImageWidget> {
     final List<XFile>? images = await picker.pickMultiImage(
       maxHeight: 1024,
       maxWidth: 1024,
+      imageQuality: 2,
+      limit: 2,
     );
     if (images != null && images.isNotEmpty && context.mounted) {
       for (var image in images.take(2)) {
@@ -148,9 +150,10 @@ class _TakeImageWidgetState extends State<TakeImageWidget> {
   }
 
   Future<void> _getImageFromGallery() async {
-    final List<XFile>? images = await picker.pickMultiImage(
+    final List<XFile> images = await picker.pickMultiImage(
       maxHeight: 1024,
       maxWidth: 1024,
+      imageQuality: 2,
     );
     if (images != null && images.isNotEmpty && context.mounted) {
       debugPrint("DOWNLOAD URL Gallery: $images");
