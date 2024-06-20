@@ -152,7 +152,7 @@ class _CreateScreenState extends State<CreateScreen> {
                 context.read<ImageBloc>().add(ChangeInitialState());
                 Navigator.pop(context);
 
-debugPrint("QQQQQQQQQQQQQQQQQQQQQQQ ${fieldController.text}");
+debugPrint("QQQQQQQQQQQQQQQQQQQQQQQq ${fieldController.text}");
 
 
                 },style: TextButton.styleFrom(
