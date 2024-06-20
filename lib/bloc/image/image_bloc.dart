@@ -1,6 +1,6 @@
-
 import 'dart:async';
 import 'dart:io';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
@@ -22,32 +22,36 @@ class ImageBloc extends Bloc<ImageEvent, ImageState> {
   Future<void> _uploadImage(UploadImage event, Emitter<ImageState> emit) async {
     emit(ImageLoading());
 
-    // try {
-    //   var ref = FirebaseStorage.instance.ref().child(event.storagePath);
-    //   File file = File(event.pickedFile.path);
-    //   var uploadTask = await ref.putFile(file);
-    //   String downloadUrl = await uploadTask.ref.getDownloadURL();
-    //
-    //   print('DOWNLOAD URL:888888888888 $downloadUrl'); // Debugging line
-    //   emit(ImageSuccess(downloadUrl));
-    // } on FirebaseException catch (error) {
-    //   emit(ImageFailure(error.toString()));
-    // }
+    try {
+      List<String> downloadUrl = [];
+      for (int i = 0; i < event.storagePath.length; i++) {
+        var ref = FirebaseStorage.instance.ref().child(event.storagePath[i]);
+        File file = File(event.pickedFile[i].path);
+        var uploadTask = await ref.putFile(file);
+        String url = await uploadTask.ref.getDownloadURL();
+        downloadUrl.add(url);
+      }
+      debugPrint('DOWNLOAD URL: $downloadUrl');
+      emit(ImageSuccess(downloadUrl));
+    } on FirebaseException catch (error) {
+      emit(ImageFailure(error.toString()));
+    }
   }
 
   Future<void> _uploadAndGetImageUrl(UploadAndGetImageUrl event, Emitter<ImageState> emit) async {
     emit(ImageLoading());
-
-    // try {
-      // final storageRef = FirebaseStorage.instance.ref();
-    //   final fileRef = storageRef.child(event.filename);
-    //   await fileRef.putFile(event.file);
-    //   String imageUrl = await fileRef.getDownloadURL();
-    //
-    //   print('DOWNLOAD URL:7777777777777 $imageUrl'); // Debugging line
-    //   emit(ImageSuccess(imageUrl));
-    // } on FirebaseException catch (e) {
-    //   emit(ImageFailure(e.message ?? 'An error occurred'));
-    // }
+    try {
+      List<String> imageUrl = [];
+      for (int i = 0; i < event.filename.length; i++) {
+        final storageRef = FirebaseStorage.instance.ref();
+        final fileRef = storageRef.child(event.filename[i]);
+        await fileRef.putFile(event.file[i]);
+        String url = await fileRef.getDownloadURL();
+        imageUrl.add(url);
+      }
+      emit(ImageSuccess(imageUrl));
+    } on FirebaseException catch (e) {
+      emit(ImageFailure(e.message ?? 'An error occurred'));
+    }
   }
 }

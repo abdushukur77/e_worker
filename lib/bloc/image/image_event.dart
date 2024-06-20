@@ -4,8 +4,8 @@ part of 'image_bloc.dart';
 abstract class ImageEvent {}
 
 class UploadImage extends ImageEvent {
-  final XFile pickedFile;
-  final String storagePath;
+  final List<XFile> pickedFile;
+  final List<String> storagePath;
 
   UploadImage({required this.pickedFile, required this.storagePath});
 }
@@ -13,8 +13,8 @@ class UploadImage extends ImageEvent {
 class ChangeInitialState extends ImageEvent {}
 
 class UploadAndGetImageUrl extends ImageEvent {
-  final File file;
-  final String filename;
+  final List<File> file;
+  final List<String> filename;
 
   UploadAndGetImageUrl({required this.file, required this.filename});
 }

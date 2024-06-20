@@ -15,7 +15,9 @@ import '../../../bloc/vacancy/vacancy_state.dart';
 import '../../../data/model/vacancy/vacancy_model.dart';
 
 class FirstVacancyPage extends StatefulWidget {
-  const FirstVacancyPage({super.key});
+  const FirstVacancyPage({super.key, required this.fieldController});
+
+  final TextEditingController fieldController;
 
   @override
   State<FirstVacancyPage> createState() => _FirstVacancyPageState();
@@ -31,8 +33,8 @@ class _FirstVacancyPageState extends State<FirstVacancyPage> {
   @override
   Widget build(BuildContext context) {
     context.read<CategoriesBloc>().add(
-      GetCategories(),
-    );
+          GetCategories(),
+        );
     final firstFormKey = GlobalKey<FormState>();
     final secondFormKey = GlobalKey<FormState>();
     final TextEditingController positionController = TextEditingController();
@@ -90,7 +92,7 @@ class _FirstVacancyPageState extends State<FirstVacancyPage> {
                                             decoration: BoxDecoration(
                                                 color: Colors.black,
                                                 borderRadius:
-                                                BorderRadius.circular(6.w)),
+                                                    BorderRadius.circular(6.w)),
                                           ),
                                         ),
                                         Container(
@@ -101,39 +103,62 @@ class _FirstVacancyPageState extends State<FirstVacancyPage> {
                                               children: <Widget>[
                                                 ...List.generate(
                                                     state.categories.length,
-                                                        (index) {
-                                                      return SohaTuri(
-                                                        onTap: () {
-                                                          setState(() {
-                                                            currentCategoryId = state.categories[index].id;
-                                                            field = state.categories[index].name;
-                                                          });
-                                                          context.read<VacancyBloc>().add(
+                                                    (index) {
+                                                  return SohaTuri(
+                                                    onTap: () {
+                                                      setState(() {
+
+                                                        currentCategoryId =
+                                                            state
+                                                                .categories[
+                                                                    index]
+                                                                .id;
+                                                        field = state
+                                                            .categories[index]
+                                                            .name;
+
+                                                        widget.fieldController.text=field;
+
+                                                      });
+                                                      context
+                                                          .read<VacancyBloc>()
+                                                          .add(
                                                             UpdateVacancyFieldEvent(
-                                                              value: currentCategoryId,
-                                                              field: VacancyField.categoryId,
+                                                              value:
+                                                                  currentCategoryId,
+                                                              field: VacancyField
+                                                                  .categoryId,
                                                             ),
                                                           );
-                                                          context
-                                                              .read<CategoriesBloc>()
-                                                              .add(GetSubCategories(parentId: currentCategoryId));
-                                                          Navigator.of(context)
-                                                              .pop();
-                                                        },
-                                                        title: state.categories[index].name,
-                                                        color: currentCategoryId ==state
-                                                            .categories[index].id ? AppColors.c257CFF
-                                                            : AppColors.c257CFF.withOpacity(0.6),
-                                                      );
-                                                    }),
+                                                      context
+                                                          .read<
+                                                              CategoriesBloc>()
+                                                          .add(GetSubCategories(
+                                                              parentId:
+                                                                  currentCategoryId));
+                                                      Navigator.of(context)
+                                                          .pop();
+                                                    },
+                                                    title: state
+                                                        .categories[index].name,
+                                                    color: currentCategoryId ==
+                                                            state
+                                                                .categories[
+                                                                    index]
+                                                                .id
+                                                        ? AppColors.c257CFF
+                                                        : AppColors.c257CFF
+                                                            .withOpacity(0.6),
+                                                  );
+                                                }),
                                                 const SizedBox(height: 20),
                                                 ElevatedButton(
                                                   onPressed: () {
                                                     Navigator.of(context).pop();
                                                   },
-                                                  style:TextButton.styleFrom(
-                                                      backgroundColor: Colors.orange
-                                                  ),
+                                                  style: TextButton.styleFrom(
+                                                      backgroundColor:
+                                                          Colors.orange),
                                                   child: const Text(
                                                     'Close',
                                                     style: TextStyle(
@@ -201,7 +226,8 @@ class _FirstVacancyPageState extends State<FirstVacancyPage> {
                                             decoration: BoxDecoration(
                                                 color: Colors.black,
                                                 borderRadius:
-                                                BorderRadius.circular(16.w)),
+                                                    BorderRadius.circular(
+                                                        16.w)),
                                           ),
                                         ),
                                         Container(
@@ -213,36 +239,60 @@ class _FirstVacancyPageState extends State<FirstVacancyPage> {
                                               children: <Widget>[
                                                 ...List.generate(
                                                     state.subCategories.length,
-                                                        (index) =>YonalishTuri(onTap: () {   setState(() {
-                                                      subCategoryId = state.subCategories[index].id;
-                                                      direction = state.subCategories[index].name;
-                                                    });
+                                                    (index) => YonalishTuri(
+                                                          onTap: () {
+                                                            setState(() {
+                                                              subCategoryId = state
+                                                                  .subCategories[
+                                                                      index]
+                                                                  .id;
+                                                              direction = state
+                                                                  .subCategories[
+                                                                      index]
+                                                                  .name;
+                                                            });
 
-                                                    context
-                                                        .read<VacancyBloc>()
-                                                        .add(
-                                                      UpdateVacancyFieldEvent(
-                                                        value: state
-                                                            .subCategories[
-                                                        index]
-                                                            .id,
-                                                        field: VacancyField
-                                                            .subCategoryId,
-                                                      ),
-                                                    );
-                                                    Navigator.of(context)
-                                                        .pop(); }, title:  state
-                                                        .subCategories[index].name,color: state.subCategories[index].id == subCategoryId ? AppColors.c257CFF : AppColors.c257CFF.withOpacity(0.6),)
-
-                                                ),
+                                                            context
+                                                                .read<
+                                                                    VacancyBloc>()
+                                                                .add(
+                                                                  UpdateVacancyFieldEvent(
+                                                                    value: state
+                                                                        .subCategories[
+                                                                            index]
+                                                                        .id,
+                                                                    field: VacancyField
+                                                                        .subCategoryId,
+                                                                  ),
+                                                                );
+                                                            Navigator.of(
+                                                                    context)
+                                                                .pop();
+                                                          },
+                                                          title: state
+                                                              .subCategories[
+                                                                  index]
+                                                              .name,
+                                                          color: state
+                                                                      .subCategories[
+                                                                          index]
+                                                                      .id ==
+                                                                  subCategoryId
+                                                              ? AppColors
+                                                                  .c257CFF
+                                                              : AppColors
+                                                                  .c257CFF
+                                                                  .withOpacity(
+                                                                      0.6),
+                                                        )),
                                                 const SizedBox(height: 20),
                                                 ElevatedButton(
                                                   onPressed: () {
                                                     Navigator.of(context).pop();
                                                   },
-                                                  style:TextButton.styleFrom(
-                                                      backgroundColor: Colors.orange
-                                                  ),
+                                                  style: TextButton.styleFrom(
+                                                      backgroundColor:
+                                                          Colors.orange),
                                                   child: const Text(
                                                     'Close',
                                                     style: TextStyle(

@@ -1,7 +1,10 @@
+import 'package:e_worker/bloc/image/image_bloc.dart';
 import 'package:e_worker/screens/create_screen/widgets/first_vacancy_page.dart';
 import 'package:e_worker/screens/create_screen/widgets/location.dart';
+import 'package:e_worker/screens/create_screen/widgets/take_image.dart';
 import 'package:e_worker/utils/colors/app_colors.dart';
 import 'package:e_worker/utils/styles/app_text_style.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
@@ -17,12 +20,17 @@ import '../../utils/formatter/input_formatter.dart';
 class CreateScreen extends StatefulWidget {
   const CreateScreen({super.key});
 
+
+
   @override
   State<CreateScreen> createState() => _CreateScreenState();
 }
 
 class _CreateScreenState extends State<CreateScreen> {
   TextEditingController phoneController=TextEditingController();
+
+
+  TextEditingController fieldController=TextEditingController();
   @override
   Widget build(BuildContext context) {
     return  Scaffold(
@@ -32,7 +40,7 @@ class _CreateScreenState extends State<CreateScreen> {
       body:  SingleChildScrollView(
         child: Column(
           children: [
-            const FirstVacancyPage(),
+             FirstVacancyPage(fieldController: fieldController),
             const LocationWidget(),
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 24.w,vertical: 24.h),
@@ -98,6 +106,62 @@ class _CreateScreenState extends State<CreateScreen> {
                 ),
               ),
             ),
+             const TakeImageWidget(),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 24.w,vertical: 16.h),
+              child: TextField(
+                maxLines: null,
+                decoration:InputDecoration(
+                  hintText: "Enter ",
+                  contentPadding: EdgeInsets.symmetric(horizontal: 10.w,vertical: 13.h),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(16.w),
+                    borderSide: BorderSide(width: 1.w,color:Colors.black),
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(16.w),
+                    borderSide: BorderSide(width: 1.w,color:Colors.black),
+                  )
+                ),
+              ),
+            ),
+            Container(
+              margin: EdgeInsets.symmetric(horizontal: 24.w),
+              width: double.infinity,
+              child: TextButton(onPressed: (){
+
+
+                // context.read<VacancyBloc>().add(
+                //   UpdateVacancyFieldEvent(
+                //     value: FirebaseAuth.instance
+                //         .currentUser!.uid,
+                //     field: VacancyField.userId,
+                //   ),
+                // );
+                context.read<VacancyBloc>().add(
+                  UpdateVacancyFieldEvent(
+                    value:
+                    DateTime.now().toString(),
+                    field: VacancyField.createdAt,
+                  ),
+                );
+
+
+                context.read<VacancyBloc>().add(ChangeToInitialState());
+
+                context.read<ImageBloc>().add(ChangeInitialState());
+                Navigator.pop(context);
+
+debugPrint("QQQQQQQQQQQQQQQQQQQQQQQ ${fieldController.text}");
+
+
+                },style: TextButton.styleFrom(
+                backgroundColor:AppColors.c257CFF,
+              ),
+                  child:Text("Saqlash",style: AppTextStyle.urbanistMedium.copyWith(
+                color: AppColors.white,fontSize: 16.w
+              ),)),
+            )
           ],
         ),
       ),
