@@ -1,3 +1,4 @@
+import 'package:e_worker/bloc/image/image_bloc.dart';
 import 'package:e_worker/screens/create_screen/widgets/first_vacancy_page.dart';
 import 'package:e_worker/screens/create_screen/widgets/location.dart';
 import 'package:e_worker/screens/create_screen/widgets/take_image.dart';
@@ -19,12 +20,17 @@ import '../../utils/formatter/input_formatter.dart';
 class CreateScreen extends StatefulWidget {
   const CreateScreen({super.key});
 
+
+
   @override
   State<CreateScreen> createState() => _CreateScreenState();
 }
 
 class _CreateScreenState extends State<CreateScreen> {
   TextEditingController phoneController=TextEditingController();
+
+
+  TextEditingController fieldController=TextEditingController();
   @override
   Widget build(BuildContext context) {
     return  Scaffold(
@@ -34,7 +40,7 @@ class _CreateScreenState extends State<CreateScreen> {
       body:  SingleChildScrollView(
         child: Column(
           children: [
-            const FirstVacancyPage(),
+             FirstVacancyPage(fieldController: fieldController),
             const LocationWidget(),
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 24.w,vertical: 24.h),
@@ -123,13 +129,15 @@ class _CreateScreenState extends State<CreateScreen> {
               margin: EdgeInsets.symmetric(horizontal: 24.w),
               width: double.infinity,
               child: TextButton(onPressed: (){
-                context.read<VacancyBloc>().add(
-                  UpdateVacancyFieldEvent(
-                    value: FirebaseAuth.instance
-                        .currentUser!.uid,
-                    field: VacancyField.userId,
-                  ),
-                );
+
+
+                // context.read<VacancyBloc>().add(
+                //   UpdateVacancyFieldEvent(
+                //     value: FirebaseAuth.instance
+                //         .currentUser!.uid,
+                //     field: VacancyField.userId,
+                //   ),
+                // );
                 context.read<VacancyBloc>().add(
                   UpdateVacancyFieldEvent(
                     value:
@@ -137,8 +145,17 @@ class _CreateScreenState extends State<CreateScreen> {
                     field: VacancyField.createdAt,
                   ),
                 );
+
+
+                context.read<VacancyBloc>().add(ChangeToInitialState());
+
+                context.read<ImageBloc>().add(ChangeInitialState());
                 Navigator.pop(context);
-              },style: TextButton.styleFrom(
+
+debugPrint("QQQQQQQQQQQQQQQQQQQQQQQ ${fieldController.text}");
+
+
+                },style: TextButton.styleFrom(
                 backgroundColor:AppColors.c257CFF,
               ),
                   child:Text("Saqlash",style: AppTextStyle.urbanistMedium.copyWith(
