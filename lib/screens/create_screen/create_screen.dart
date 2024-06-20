@@ -59,40 +59,6 @@ class _CreateScreenState extends State<CreateScreen> {
     super.dispose();
   }
 
-  // void _showConfirmationDialog(BuildContext context) {
-  //   showDialog(
-  //     context: context,
-  //     builder: (BuildContext context) {
-  //       return AlertDialog(
-  //         title: const Text('Confirmation'),
-  //         content: const Text('Do you want to proceed?'),
-  //         actions: <Widget>[
-  //           TextButton(
-  //             onPressed: () {
-  //
-  //               Navigator.of(context).pop(); // Close the dialog
-  //               context.read<VacancyBloc>().add(
-  //                 AddVacancyEvent(
-  //                   vacancyModel:vacancyModel,
-  //                 ),
-  //               );
-  //               print('Yes');
-  //             },
-  //             child: const Text('Yes'),
-  //           ),
-  //           TextButton(
-  //             onPressed: () {
-  //               Navigator.of(context).pop(); // Close the dialog
-  //               // Handle the "No" action here
-  //               print('No');
-  //             },
-  //             child: const Text('No'),
-  //           ),
-  //         ],
-  //       );
-  //     },
-  //   );
-  // }
 
   @override
   Widget build(BuildContext context) {

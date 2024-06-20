@@ -6,10 +6,14 @@ import 'package:e_worker/utils/styles/app_text_style.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:shimmer/shimmer.dart';
+import 'package:url_launcher/url_launcher.dart';
+import 'package:zoom_tap_animation/zoom_tap_animation.dart';
 
 class VacancyScreen extends StatefulWidget {
   const VacancyScreen({super.key, required this.vacancyModel});
+
   final VacancyModel vacancyModel;
+
   @override
   State<VacancyScreen> createState() => _VacancyScreenState();
 }
@@ -19,9 +23,11 @@ class _VacancyScreenState extends State<VacancyScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.vacancyModel.jobTitle,style: AppTextStyle.urbanistMedium.copyWith(
-          color: AppColors.black,fontSize:24.sp
-        ),),
+        title: Text(
+          widget.vacancyModel.jobTitle,
+          style: AppTextStyle.urbanistMedium
+              .copyWith(color: AppColors.black, fontSize: 24.sp),
+        ),
         centerTitle: true,
       ),
       body: Column(
@@ -30,36 +36,38 @@ class _VacancyScreenState extends State<VacancyScreen> {
           SizedBox(
             height: 200.h,
             child: CarouselSlider(
-              items:List.generate(
-                widget.vacancyModel.brandImage.length,(index) {
-                return Container(
-                  padding: EdgeInsets.symmetric(horizontal: 16.w,vertical:4.h),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(46.w),
-                    child: CachedNetworkImage(
-                      fit: BoxFit.cover,
-                      width: double.infinity-20.w,
-                      imageUrl: widget.vacancyModel.brandImage[index],
-                      placeholder: (context, url) => Shimmer.fromColors(
-                        enabled: true,
-                        baseColor: Colors.grey.shade300,
-                        highlightColor: Colors.white,
-                        child: Container(
-                          decoration: BoxDecoration(
-                              color: Colors.grey,
-                              borderRadius: BorderRadius.circular(6.w)),
-                          height: double.infinity,
-                          width: double.infinity,
+              items: List.generate(
+                widget.vacancyModel.brandImage.length,
+                (index) {
+                  return Container(
+                    padding:
+                        EdgeInsets.symmetric(horizontal: 16.w, vertical: 4.h),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(46.w),
+                      child: CachedNetworkImage(
+                        fit: BoxFit.cover,
+                        width: double.infinity - 20.w,
+                        imageUrl: widget.vacancyModel.brandImage[index],
+                        placeholder: (context, url) => Shimmer.fromColors(
+                          enabled: true,
+                          baseColor: Colors.grey.shade300,
+                          highlightColor: Colors.white,
+                          child: Container(
+                            decoration: BoxDecoration(
+                                color: Colors.grey,
+                                borderRadius: BorderRadius.circular(6.w)),
+                            height: double.infinity,
+                            width: double.infinity,
+                          ),
                         ),
+                        errorWidget: (context, url, error) =>
+                            const Center(child: Icon(Icons.error)),
                       ),
-                      errorWidget: (context, url, error) =>
-                      const Center(child: Icon(Icons.error)),
                     ),
-                  ),
-                );
-              },
+                  );
+                },
               ),
-              options:CarouselOptions(
+              options: CarouselOptions(
                 aspectRatio: 16 / 10,
                 viewportFraction: 1,
                 initialPage: 0,
@@ -74,30 +82,45 @@ class _VacancyScreenState extends State<VacancyScreen> {
                 scrollDirection: Axis.horizontal,
               ),
             ),
-
           ),
-          SizedBox(height: 30.h,),
+          SizedBox(
+            height: 30.h,
+          ),
           Padding(
-            padding:EdgeInsets.symmetric(horizontal: 24.w),
+            padding: EdgeInsets.symmetric(horizontal: 24.w),
             child: SingleChildScrollView(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text("Telephone:",style: AppTextStyle.urbanistMedium.copyWith(
-                    color: AppColors.black,fontSize:20.sp
-                  ),),
-                  SizedBox(height: 10.h,),
-                  Row(children: [
-                    Icon(Icons.phone,size: 32.sp,),
-                    SizedBox(width: 10.w,),
-                    Text("+998 ${widget.vacancyModel.phone}",style: AppTextStyle.urbanistSemiBold.copyWith(
-                      color: AppColors.black,fontSize: 20.sp
-                    ),),
-                  ],),
-                  SizedBox(height: 20.h,),
-                  Text("Batafsil:\n${widget.vacancyModel.description}",style: AppTextStyle.urbanistSemiBold.copyWith(
-                    color: AppColors.black,fontSize:16.sp
-                  ),)
+                  Text(
+                    "Telephone:",
+                    style: AppTextStyle.urbanistMedium
+                        .copyWith(color: AppColors.black, fontSize: 20.sp),
+                  ),
+                  SizedBox(height: 10.h),
+                  ZoomTapAnimation(
+                    onTap: () {
+                      _makePhoneCall('+998${widget.vacancyModel.phone}');
+                    },
+                    child: Row(
+                      children: [
+                        Icon(Icons.phone, size: 32.sp),
+                        SizedBox(width: 10.w),
+                        Text(
+                          "+998 ${widget.vacancyModel.phone}",
+                          style: AppTextStyle.urbanistSemiBold.copyWith(
+                              color: AppColors.black, fontSize: 20.sp),
+                        ),
+                      ],
+                    ),
+                  ),
+
+                  SizedBox(height: 20.h),
+                  Text(
+                    "Batafsil:\n${widget.vacancyModel.description}",
+                    style: AppTextStyle.urbanistSemiBold
+                        .copyWith(color: AppColors.black, fontSize: 16.sp),
+                  )
                 ],
               ),
             ),
@@ -106,4 +129,17 @@ class _VacancyScreenState extends State<VacancyScreen> {
       ),
     );
   }
+
+  void _makePhoneCall(String phoneNumber) async {
+    final Uri launchUri = Uri(
+      scheme: 'tel',
+      path: phoneNumber,
+    );
+    if (await canLaunchUrl(launchUri)) {
+      await launchUrl(launchUri);
+    } else {
+      throw 'Could not launch $phoneNumber';
+    }
+  }
+
 }
