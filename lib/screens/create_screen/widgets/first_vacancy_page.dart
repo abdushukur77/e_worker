@@ -1,5 +1,6 @@
 import 'package:e_worker/screens/create_screen/widgets/soha_turi.dart';
 import 'package:e_worker/screens/create_screen/widgets/yonalish_turi.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -15,9 +16,10 @@ import '../../../bloc/vacancy/vacancy_state.dart';
 import '../../../data/model/vacancy/vacancy_model.dart';
 
 class FirstVacancyPage extends StatefulWidget {
-  const FirstVacancyPage({super.key, required this.fieldController});
+  const FirstVacancyPage({super.key, required this.fieldController, required this.yonalishControler});
 
   final TextEditingController fieldController;
+  final TextEditingController yonalishControler;
 
   @override
   State<FirstVacancyPage> createState() => _FirstVacancyPageState();
@@ -129,6 +131,7 @@ class _FirstVacancyPageState extends State<FirstVacancyPage> {
                                                               field: VacancyField
                                                                   .categoryId,
                                                             ),
+
                                                           );
                                                       context
                                                           .read<
@@ -250,6 +253,9 @@ class _FirstVacancyPageState extends State<FirstVacancyPage> {
                                                                   .subCategories[
                                                                       index]
                                                                   .name;
+
+                                                              widget.yonalishControler.text=direction;
+
                                                             });
 
                                                             context

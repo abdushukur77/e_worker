@@ -20,10 +20,7 @@ class UtilityFunctions {
   static void printVacancy(VacancyModel vacancyModel) {
     methodPrint(
       " isValid: ${vacancyModel.isValid} "
-          "fromWhere: ${vacancyModel.fromWhere} "
-          "currency: ${vacancyModel.currency} "
           "recruiterPhone: ${vacancyModel.phone} "
-          "jobType: ${vacancyModel.jobType} "
           "description: ${vacancyModel.description}"
           " jobTitle: ${vacancyModel.jobTitle}"
           " createdAt: ${vacancyModel.createdAt} "
