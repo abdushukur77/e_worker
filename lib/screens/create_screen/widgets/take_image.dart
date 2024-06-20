@@ -12,7 +12,8 @@ import '../../../data/model/vacancy/vacancy_model.dart';
 import '../../../utils/size/size_utils.dart';
 
 class TakeImageWidget extends StatefulWidget {
-  const TakeImageWidget({super.key});
+  const TakeImageWidget({super.key, required this.hasImage});
+   final TextEditingController hasImage;
 
   @override
   State<TakeImageWidget> createState() => _TakeImageWidgetState();
@@ -35,6 +36,8 @@ class _TakeImageWidgetState extends State<TakeImageWidget> {
               );
             }
             if (state is ImageSuccess) {
+              widget.hasImage.text=imageUrl[0];
+
               return Center(
                 child: SizedBox(
                   height: 150.h,
@@ -85,6 +88,7 @@ class _TakeImageWidgetState extends State<TakeImageWidget> {
           },
           listener: (BuildContext context, ImageState state) {
             if (state is ImageSuccess) {
+
               imageUrl = state.imageUrl;
               debugPrint("CURRENT IMAGE: $imageUrl");
               context.read<VacancyBloc>().add(

@@ -1,5 +1,6 @@
 import 'package:e_worker/bloc/vacancy/vacancy_event.dart';
 import 'package:e_worker/bloc/vacancy/vacancy_state.dart';
+import 'package:e_worker/data/model/network_response.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../data/model/forms_status.dart';
 import '../../data/model/vacancy/vacancy_model.dart';
@@ -34,8 +35,8 @@ class VacancyBloc extends Bloc<VacancyEvent, VacancyState> {
     ));
   }
 
-  Future<void> _getVacanciesByCategoryId(
-      GetVacanciesByCategoryId event, emit) async {
+  Future<void> _getVacanciesByCategoryId(GetVacanciesByCategoryId event,
+      emit) async {
     emit(state.copyWith(status: FormsStatus.loading));
 
     // NetworkResponse response = await vacancyRepository.getVacanciesByCategoryId(event.categoryId);
@@ -48,6 +49,7 @@ class VacancyBloc extends Bloc<VacancyEvent, VacancyState> {
     //       status: FormsStatus.error, errorMessage: response.errorText));
     // }
   }
+
   //
   // Future<void> _getVacanciesBySubCategoryId(
   //   //   GetVacanciesBySubCategoryId event, emit) async {
@@ -88,61 +90,60 @@ class VacancyBloc extends Bloc<VacancyEvent, VacancyState> {
   }
 
   _insertVacancy(AddVacancyEvent event, emit) async {
-    // emit(state.copyWith(status: FormsStatus.loading, statusMessage: ""));
-    // NetworkResponse networkResponse =
-    //     await vacancyRepository.addVacancy(state.vacancyModel);
-    // if (networkResponse.errorText.isEmpty) {
-    //   VacancyModel vacancyModel = networkResponse.data as VacancyModel;
-    //
-    //
-    //
-    //   emit(state.copyWith(
-    //       status: FormsStatus.success, vacancyModel: vacancyModel, statusMessage: "added_vacancy"));
-    //
-    //
-    // } else {
-    //   emit(
-    //     state.copyWith(
-    //       status: FormsStatus.error,
-    //       errorMessage: networkResponse.errorText,
-    //     ),
-    //   );
+    emit(state.copyWith(status: FormsStatus.loading, statusMessage: ""));
+    NetworkResponse networkResponse =
+    await vacancyRepository.addVacancy(state.vacancyModel);
+    if (networkResponse.errorText.isEmpty) {
+      VacancyModel vacancyModel = networkResponse.data as VacancyModel;
+
+
+      emit(state.copyWith(
+          status: FormsStatus.success,
+          vacancyModel: vacancyModel,
+          statusMessage: "added_vacancy"));
+    } else {
+      emit(
+        state.copyWith(
+          status: FormsStatus.error,
+          errorMessage: networkResponse.errorText,
+        ),
+      );
     }
   }
 
   _deleteVacancy(DeleteVacancyEvent event, emit) async {
-    // emit(FormsStatus.loading);
-    //
-    // NetworkResponse networkResponse =
-    //     (await vacancyRepository.deleteVacancy(state.vacancyModel.vacancyId));
-    //
-    // if (networkResponse.errorText.isEmpty) {
-    //   emit(
-    //     state.copyWith(
-    //       status: FormsStatus.success,
-    //       vacancyModel: VacancyModel.initial(),
-    //     ),
-    //   );
-    // } else {
-    //   emit(
-    //     state.copyWith(
-    //       status: FormsStatus.error,
-    //       errorMessage: networkResponse.errorText,
-    //     ),
-    //   );
-    // }
+    emit(FormsStatus.loading);
+
+    NetworkResponse networkResponse =
+        (await vacancyRepository.deleteVacancy(state.vacancyModel.vacancyId));
+
+    if (networkResponse.errorText.isEmpty) {
+      emit(
+        state.copyWith(
+          status: FormsStatus.success,
+          vacancyModel: VacancyModel.initial(),
+        ),
+      );
+    } else {
+      emit(
+        state.copyWith(
+          status: FormsStatus.error,
+          errorMessage: networkResponse.errorText,
+        ),
+      );
+    }
   }
 
   _updateVacancy(UpdateVacancyEvent event, emit) async {
-    // emit(FormsStatus.loading);
-    // NetworkResponse networkResponse =
-    //     await vacancyRepository.updateVacancy(state.vacancyModel);
-    // if (networkResponse.errorText.isEmpty) {
-    //   emit(state.copyWith(status: FormsStatus.success));
-    // } else {
-    //   emit(state.copyWith(
-    //       status: FormsStatus.error, errorMessage: networkResponse.errorText));
-    // }
+    emit(FormsStatus.loading);
+    NetworkResponse networkResponse =
+        await vacancyRepository.updateVacancy(state.vacancyModel);
+    if (networkResponse.errorText.isEmpty) {
+      emit(state.copyWith(status: FormsStatus.success));
+    } else {
+      emit(state.copyWith(
+          status: FormsStatus.error, errorMessage: networkResponse.errorText));
+    }
   }
 
   _updateField(UpdateVacancyFieldEvent event, Emitter<VacancyState> emit) {
@@ -158,7 +159,8 @@ class VacancyBloc extends Bloc<VacancyEvent, VacancyState> {
         UtilityFunctions.methodPrint(
           "UPDATED VACANCY FIELD IS: ${event.field}, VALUE IS: ${event.value}",
         );
-        vacancyModel = vacancyModel.copyWith(brandImage: event.value as List<String>);
+        vacancyModel =
+            vacancyModel.copyWith(brandImage: event.value as List<String>);
         break;
       case VacancyField.categoryId:
         UtilityFunctions.methodPrint(
@@ -192,12 +194,7 @@ class VacancyBloc extends Bloc<VacancyEvent, VacancyState> {
         vacancyModel =
             vacancyModel.copyWith(description: event.value as String);
         break;
-      case VacancyField.jobType:
-        UtilityFunctions.methodPrint(
-          "UPDATED VACANCY FIELD IS: ${event.field}, VALUE IS: ${event.value}",
-        );
-        vacancyModel = vacancyModel.copyWith(jobType: event.value);
-        break;
+
       case VacancyField.recruiterPhone:
         UtilityFunctions.methodPrint(
           "UPDATED VACANCY FIELD IS: ${event.field}, VALUE IS: ${event.value}",
@@ -205,18 +202,8 @@ class VacancyBloc extends Bloc<VacancyEvent, VacancyState> {
         vacancyModel =
             vacancyModel.copyWith(phone: event.value as String);
         break;
-      case VacancyField.currency:
-        UtilityFunctions.methodPrint(
-          "UPDATED VACANCY FIELD IS: ${event.field}, VALUE IS: ${event.value}",
-        );
-        vacancyModel = vacancyModel.copyWith(currency: event.value as String);
-        break;
-      case VacancyField.fromWhere:
-        UtilityFunctions.methodPrint(
-          "UPDATED VACANCY FIELD IS: ${event.field}, VALUE IS: ${event.value}",
-        );
-        vacancyModel = vacancyModel.copyWith(fromWhere: event.value);
-        break;
+
+
       case VacancyField.isValid:
         UtilityFunctions.methodPrint(
           "UPDATED VACANCY FIELD IS: ${event.field}, VALUE IS: ${event.value}",
@@ -239,7 +226,7 @@ class VacancyBloc extends Bloc<VacancyEvent, VacancyState> {
         break;
     }
 
-    // emit(state.copyWith(vacancyModel: vacancyModel));
+    emit(state.copyWith(vacancyModel: vacancyModel));
   }
 
   _getVacancy(GetVacancyEvent event, Emitter<VacancyState> emit) async {
@@ -276,6 +263,7 @@ class VacancyBloc extends Bloc<VacancyEvent, VacancyState> {
     //     ));
     //   },
     // );
-  // }
-}
+    // }
+  }
 
+}
