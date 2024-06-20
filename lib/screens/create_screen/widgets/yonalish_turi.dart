@@ -2,10 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class YonalishTuri extends StatelessWidget {
-  const YonalishTuri({super.key, required this.onTap, required this.title, required this.color});
+  const YonalishTuri({super.key, required this.onTap, required this.title, required this.color, required this.isActive});
   final VoidCallback onTap;
   final String  title;
   final Color color;
+  final bool isActive;
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -16,6 +17,7 @@ class YonalishTuri extends StatelessWidget {
           child: Container(
             width: double.infinity,
             decoration: BoxDecoration(
+              border: Border.all(color:Colors.blue),
               borderRadius:
               BorderRadius.circular(6.w), color:color,
             ),
@@ -26,7 +28,7 @@ class YonalishTuri extends StatelessWidget {
                   20.w,
                   vertical: 5.h),
               child: Text(
-                title,style:TextStyle(color: Colors.white,fontSize: 20.w),
+                title,style:TextStyle(color: (isActive)?Colors.white:Colors.black,fontSize: 20.w),
               ),
             ),
           ),
