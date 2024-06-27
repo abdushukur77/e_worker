@@ -1,5 +1,7 @@
 import 'package:e_worker/screens/create_screen/widgets/soha_turi.dart';
 import 'package:e_worker/screens/create_screen/widgets/yonalish_turi.dart';
+import 'package:e_worker/utils/styles/app_text_style.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -140,7 +142,7 @@ class _FirstVacancyPageState extends State<FirstVacancyPage> {
                                                           .pop();
                                                     },
                                                     title: state
-                                                        .categories[index].name,
+                                                        .categories[index].name.tr(),
                                                     color: currentCategoryId ==
                                                             state
                                                                 .categories[
@@ -158,10 +160,11 @@ class _FirstVacancyPageState extends State<FirstVacancyPage> {
                                                   style: TextButton.styleFrom(
                                                       backgroundColor:
                                                           Colors.orange),
-                                                  child: const Text(
-                                                    'Close',
-                                                    style: TextStyle(
-                                                        color: Colors.white),
+                                                  child: Text(
+                                                    'close'.tr(),
+                                                    style:AppTextStyle.urbanistMedium.copyWith(
+                                                      color:AppColors.white
+                                                    ),
                                                   ),
                                                 ),
                                               ],
@@ -178,7 +181,7 @@ class _FirstVacancyPageState extends State<FirstVacancyPage> {
                             },
                             child: Center(
                               child: Text(
-                                field.isEmpty ? "Soha tanlang" : field,
+                                field.isEmpty ? "choose_field".tr() : field.tr(),
                                 style: const TextStyle(
                                   color: Colors.white,
                                 ),
@@ -253,8 +256,7 @@ class _FirstVacancyPageState extends State<FirstVacancyPage> {
                                                                   .subCategories[
                                                                       index]
                                                                   .name;
-
-                                                              widget.yonalishControler.text=direction;
+                                                              widget.yonalishControler.text=direction.tr();
 
                                                             });
 
@@ -278,7 +280,7 @@ class _FirstVacancyPageState extends State<FirstVacancyPage> {
                                                           title: state
                                                               .subCategories[
                                                                   index]
-                                                              .name,
+                                                              .name.tr(),
                                                           color: state
                                                                       .subCategories[
                                                                           index]
@@ -296,10 +298,11 @@ class _FirstVacancyPageState extends State<FirstVacancyPage> {
                                                   style: TextButton.styleFrom(
                                                       backgroundColor:
                                                           Colors.orange),
-                                                  child: const Text(
-                                                    'Close',
-                                                    style: TextStyle(
-                                                        color: Colors.white),
+                                                  child:Text(
+                                                    'close'.tr(),
+                                                    style:AppTextStyle.urbanistMedium.copyWith(
+                                                      color: AppColors.white
+                                                    ),
                                                   ),
                                                 ),
                                               ],
@@ -317,8 +320,8 @@ class _FirstVacancyPageState extends State<FirstVacancyPage> {
                             child: Center(
                               child: Text(
                                 direction.isEmpty
-                                    ? "Yo'nalish tanlang"
-                                    : direction,
+                                    ? "choose_burn".tr()
+                                    : direction.tr(),
                                 style: const TextStyle(
                                   color: Colors.white,
                                 ),

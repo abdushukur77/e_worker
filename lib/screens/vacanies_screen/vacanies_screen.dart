@@ -5,6 +5,7 @@ import 'package:e_worker/data/model/vacancy/vacancy_model.dart';
 import 'package:e_worker/screens/vacancy/vacancy_screen.dart';
 import 'package:e_worker/utils/colors/app_colors.dart';
 import 'package:e_worker/utils/styles/app_text_style.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -30,9 +31,9 @@ class _VacanciesScreenState extends State<VacanciesScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          widget.name,
+          widget.name.tr(),
           style: AppTextStyle.urbanistMedium
-              .copyWith(color: AppColors.black, fontSize: 24.sp),
+              .copyWith(color: AppColors.black, fontSize: 20.sp),
         ),
         centerTitle: true,
       ),
@@ -86,7 +87,7 @@ class _VacanciesScreenState extends State<VacanciesScreen> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                state.vacancies[index].jobTitle,
+                                state.vacancies[index].jobTitle.tr(),
                                 style: AppTextStyle.urbanistSemiBold.copyWith(
                                     color: AppColors.black, fontSize: 20.sp),
                               ),

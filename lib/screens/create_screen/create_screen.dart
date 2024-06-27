@@ -1,10 +1,17 @@
 import 'package:e_worker/bloc/image/image_bloc.dart';
+import 'package:e_worker/bloc/my_vacancy/my_vacancy_bloc.dart';
+import 'package:e_worker/bloc/my_vacancy/my_vacancy_event.dart';
+import 'package:e_worker/bloc/places/search_bloc.dart';
+import 'package:e_worker/bloc/places/search_state.dart';
 import 'package:e_worker/bloc/vacancy/vacancy_state.dart';
+import 'package:e_worker/data/repository/my_vacancy_repository.dart';
+import 'package:e_worker/screens/create_screen/widgets/district.dart';
 import 'package:e_worker/screens/create_screen/widgets/first_vacancy_page.dart';
 import 'package:e_worker/screens/create_screen/widgets/location.dart';
 import 'package:e_worker/screens/create_screen/widgets/take_image.dart';
 import 'package:e_worker/utils/colors/app_colors.dart';
 import 'package:e_worker/utils/styles/app_text_style.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -29,6 +36,7 @@ class _CreateScreenState extends State<CreateScreen> {
   TextEditingController locationController = TextEditingController();
   TextEditingController yonalishController = TextEditingController();
   TextEditingController informationController=TextEditingController();
+  TextEditingController districtController=TextEditingController();
   TextEditingController hasImage = TextEditingController();
   VacancyModel vacancyModel = VacancyModel.initial();
   bool isButtonEnabled = false;
@@ -64,7 +72,10 @@ class _CreateScreenState extends State<CreateScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Create Screen"),
+        title:  Text("create_vacancy".tr(),style: AppTextStyle.urbanistMedium.copyWith(
+          color: AppColors.black,fontSize:20.sp
+        ),),
+        centerTitle: true,
       ),
       body: SingleChildScrollView(
         child: BlocBuilder<VacancyBloc, VacancyState>(
@@ -77,7 +88,9 @@ class _CreateScreenState extends State<CreateScreen> {
                     fieldController: fieldController,
                     yonalishControler: yonalishController,
                   ),
-                  LocationWidget(locationController: locationController),
+                  LocationWidget(locationController:locationController),
+                  SizedBox(height: 16.h,),
+                  DistrictWidget(districtController: districtController),
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 24.h),
                     child: TextFormField(
@@ -151,7 +164,7 @@ class _CreateScreenState extends State<CreateScreen> {
                       maxLines: null,
                       controller: informationController,
                       decoration: InputDecoration(
-                        hintText: "Enter ",
+                        hintText: "enter_information".tr(),
                         contentPadding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 13.h),
                         focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(16.w),
@@ -174,7 +187,7 @@ class _CreateScreenState extends State<CreateScreen> {
                           UpdateVacancyFieldEvent(value:informationController.text, field:VacancyField.description),
                         );
                         context.read<VacancyBloc>().add(
-                          UpdateVacancyFieldEvent(value:locationController.text, field:VacancyField.position),
+                          UpdateVacancyFieldEvent(value:"${locationController.text} ${districtController.text}", field:VacancyField.position),
                         );
                         context.read<VacancyBloc>().add(
                           UpdateVacancyFieldEvent(value:DateTime.now().toString(), field:VacancyField.createdAt),
@@ -182,9 +195,17 @@ class _CreateScreenState extends State<CreateScreen> {
                         context.read<VacancyBloc>().add(
                           UpdateVacancyFieldEvent(value:yonalishController.text, field:VacancyField.jobTitle),
                         );
+                        vacancyModel=state.vacancyModel;
                         context.read<VacancyBloc>().add(
                           AddVacancyEvent(vacancyModel:state.vacancyModel),
                         );
+                        vacancyModel=vacancyModel.copyWith(
+                          description: informationController.text,
+                          position: locationController.text,
+                          createdAt: DateTime.now().toString(),
+                          jobTitle: yonalishController.text
+                        );
+                        context.read<MyVacancyBloc>().add(MyAddVacancyEvent(vacancyModel:vacancyModel));
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(content: Text("Muvaffaqqiyatli qo'shildi",style: AppTextStyle.urbanistMedium.copyWith(
                             color: AppColors.white,fontSize: 14.sp
@@ -197,7 +218,7 @@ class _CreateScreenState extends State<CreateScreen> {
                         backgroundColor: isButtonEnabled ? AppColors.c257CFF : Colors.grey,
                       ),
                       child: Text(
-                        "Saqlash",
+                        "save".tr(),
                         style: AppTextStyle.urbanistMedium.copyWith(color: AppColors.white, fontSize: 16.w),
                       ),
                     ),

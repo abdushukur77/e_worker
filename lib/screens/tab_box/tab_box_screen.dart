@@ -1,3 +1,4 @@
+import 'package:e_worker/bloc/image/image_bloc.dart';
 import 'package:e_worker/bloc/vacancy/vacancy_bloc.dart';
 import 'package:e_worker/bloc/vacancy/vacancy_event.dart';
 import 'package:e_worker/screens/create_screen/create_screen.dart';
@@ -62,6 +63,7 @@ class _TabBoxScreenState extends State<TabBoxScreen> {
           backgroundColor: Colors.blue,
           onPressed: () {
             context.read<VacancyBloc>().add(ChangeToInitialState());
+            context.read<ImageBloc>().add(ChangeInitialState());
             Navigator.push(context, MaterialPageRoute(builder: (context) {
               return const CreateScreen();
             }));

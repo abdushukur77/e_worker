@@ -1,7 +1,10 @@
 import 'package:e_worker/utils/colors/app_colors.dart';
 import 'package:e_worker/utils/styles/app_text_style.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+
+import 'my_vacancy_screen.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -27,30 +30,57 @@ class _ProfileScreenState extends State<ProfileScreen> {
             Center(
               child: Column(
                 children: [
-                  Text("Profile",style: AppTextStyle.urbanistMedium.copyWith(
+                  Text("profile".tr(),style: AppTextStyle.urbanistMedium.copyWith(
                       color: AppColors.black,fontSize: 30.sp
                   ),),
                   SizedBox(height: 20.h,),
                   Icon(Icons.account_circle_rounded,size: 100.sp,),
+                  SizedBox(height: 5.h,),
+                  Text("userID"),
                 ],
               ),
             ),
             SizedBox(height: 16.h,),
-            Text("name \nFalonchi",style: AppTextStyle.urbanistMedium.copyWith(
-              color: AppColors.black,fontSize:24.sp
+            Text("   ${"name".tr()}:",style: AppTextStyle.urbanistMedium.copyWith(
+              color: AppColors.black,fontSize:20.sp
             ),),
-            SizedBox(height: 16.h,),
-            Text("lastname\nFalonchiyev",style: AppTextStyle.urbanistMedium.copyWith(
-                color: AppColors.black,fontSize:24.sp
+            Text("    Falonchi",style: AppTextStyle.urbanistMedium.copyWith(
+              color: AppColors.black,fontSize: 20.sp,
             ),),
-            SizedBox(height: 16.h,),
-            Text("phone\n+998 99 999 99 99",style: AppTextStyle.urbanistMedium.copyWith(
-                color: AppColors.black,fontSize:24.sp
-            ),),
-            SizedBox(height: 16.h,),
-            Text("email\nexample@gmail.com",style: AppTextStyle.urbanistMedium.copyWith(
-                color: AppColors.black,fontSize:24.sp
-            ),),
+            SizedBox(height: 20.h,),
+            ListTile(
+              onTap: (){},
+              leading: Icon(Icons.settings,size: 25.sp,),
+              trailing: Icon(Icons.arrow_forward_ios_sharp,size: 25.sp,),
+              title: Text("setting".tr(),style: AppTextStyle.urbanistMedium.copyWith(
+                color: AppColors.black,fontSize:20.sp
+              ),),
+            ),
+            ListTile(
+              onTap: (){
+                Navigator.push(context,MaterialPageRoute(builder: (context){
+                  return const MyVacancyScreen();
+                }));
+              },
+              leading: Icon(Icons.category,size: 25.sp,),
+              trailing: Icon(Icons.arrow_forward_ios_sharp,size: 25.sp,),
+              title: Text("my_vacancies".tr(),style: AppTextStyle.urbanistMedium.copyWith(
+                  color: AppColors.black,fontSize:20.sp
+              ),),
+            ),
+            ListTile(
+              onTap: (){
+                Navigator.push(context,MaterialPageRoute(builder: (context){
+                  return const MyVacancyScreen();
+                }));
+              },
+              leading: Icon(Icons.language,size: 25.sp,),
+              trailing: Icon(Icons.arrow_forward_ios_sharp,size: 25.sp,),
+              title: Text("language".tr(),style: AppTextStyle.urbanistMedium.copyWith(
+                  color: AppColors.black,fontSize:20.sp
+              ),),
+            ),
+
           ],
         ),
       ),
