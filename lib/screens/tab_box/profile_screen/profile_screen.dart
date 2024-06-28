@@ -1,3 +1,4 @@
+import 'package:e_worker/screens/languages/languages.dart';
 import 'package:e_worker/utils/colors/app_colors.dart';
 import 'package:e_worker/utils/styles/app_text_style.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -71,7 +72,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
             ListTile(
               onTap: (){
                 Navigator.push(context,MaterialPageRoute(builder: (context){
-                  return const MyVacancyScreen();
+                  return LanguagesScreen(
+                    onTab: (){
+                      setState(() {});
+                    },
+                  );
                 }));
               },
               leading: Icon(Icons.language,size: 25.sp,),

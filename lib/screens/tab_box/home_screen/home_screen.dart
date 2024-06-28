@@ -69,9 +69,6 @@ class _HomeScreenState extends State<HomeScreen> {
                 return SliverList(
                     delegate: SliverChildBuilderDelegate(
                         (BuildContext context, int index) {
-                  // if (state.formsStatus == FormsStatus.loading) {
-                  //   return ShimmerWidget(width: double.infinity, height: 100.h);
-                  // }
                   if (state.formsStatus == FormsStatus.success) {
                     return ZoomTapAnimation(
                       onTap: () {
