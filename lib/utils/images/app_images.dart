@@ -14,6 +14,8 @@ class AppImages {
   static const String phone = "assets/images/phone.png";
   static const String callPng = "assets/images/call.png";
   static const String dennic = "assets/images/dennic.png";
+  static const String fon = "assets/images/img.png";
+  static const String empty = "assets/lottie/empty.json";
 
   //.svg
 

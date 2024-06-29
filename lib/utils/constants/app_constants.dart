@@ -8,6 +8,8 @@ class AppConstants {
   static RegExp textRegExp = RegExp(r"^[A-Z][a-zA-Z]*");
 
   static const String vacancyTable = 'vacancies';
+  static const String users = 'users';
+  static const String myVacancyTable = 'my_vacancies';
   static String resumesTable = "resumes_table_best_developers";
   static String categories = "categories";
   static String banners = "banners";

@@ -5,6 +5,7 @@ import 'package:e_worker/screens/tab_box/home_screen/widgets/banner_item.dart';
 import 'package:e_worker/screens/vacanies_screen/vacanies_screen.dart';
 import 'package:e_worker/utils/colors/app_colors.dart';
 import 'package:e_worker/utils/styles/app_text_style.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -40,7 +41,7 @@ class _HomeScreenState extends State<HomeScreen> {
       child: Scaffold(
         appBar: AppBar(
           title: Text(
-            "Biz bilan izlayotganingizni toping",
+            "home".tr(),
             style: AppTextStyle.urbanistMedium
                 .copyWith(color: AppColors.black, fontSize: 20.sp),
           ),
@@ -56,7 +57,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     const BannerItem(),
                     SizedBox(height: 20.h),
                     Text(
-                      "Categoriyalar",
+                      "categories".tr(),
                       style: AppTextStyle.urbanistMedium
                           .copyWith(color: AppColors.black, fontSize: 24.sp),
                     ),
@@ -68,9 +69,6 @@ class _HomeScreenState extends State<HomeScreen> {
                 return SliverList(
                     delegate: SliverChildBuilderDelegate(
                         (BuildContext context, int index) {
-                  // if (state.formsStatus == FormsStatus.loading) {
-                  //   return ShimmerWidget(width: double.infinity, height: 100.h);
-                  // }
                   if (state.formsStatus == FormsStatus.success) {
                     return ZoomTapAnimation(
                       onTap: () {
@@ -109,9 +107,9 @@ class _HomeScreenState extends State<HomeScreen> {
                               height: 7.h,
                             ),
                             Text(
-                              state.categories[index].name,
+                              state.categories[index].name.tr(),
                               style: AppTextStyle.urbanistMedium.copyWith(
-                                  color: AppColors.black, fontSize: 24.sp),
+                                  color: AppColors.black, fontSize: 20.sp),
                             )
                           ],
                         ),
