@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:e_worker/data/local/storage_repository.dart';
 import 'package:e_worker/data/model/vacancy/vacancy_model.dart';
 import 'package:e_worker/utils/constants/app_constants.dart';
 import 'package:e_worker/utils/utility/utility_functions.dart';
@@ -17,6 +18,7 @@ class MyVacancyRepository {
           .collection(AppConstants.myVacancyTable)
           .doc(documentReference.id)
           .update({"vacancy_id": documentReference.id});
+      StorageRepository.setString(key: 'key', value:documentReference.id);
       UtilityFunctions.printVacancy(
         vacancyModel,
       );
