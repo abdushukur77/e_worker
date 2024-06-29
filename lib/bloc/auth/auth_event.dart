@@ -15,4 +15,7 @@ class RegisterUserEvent extends AuthEvent {
   List<Object?> get props => [userModel];
 }
 
-
+class GetUserEvent extends AuthEvent{
+  @override
+  List<Object?> get props => [];
+}

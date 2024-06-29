@@ -1,3 +1,4 @@
+import 'package:e_worker/bloc/auth/auth_bloc.dart';
 import 'package:e_worker/bloc/image/image_bloc.dart';
 import 'package:e_worker/bloc/my_vacancy/my_vacancy_bloc.dart';
 import 'package:e_worker/bloc/my_vacancy/my_vacancy_event.dart';
@@ -203,7 +204,8 @@ class _CreateScreenState extends State<CreateScreen> {
                           description: informationController.text,
                           position: locationController.text,
                           createdAt: DateTime.now().toString(),
-                          jobTitle: yonalishController.text
+                          jobTitle: yonalishController.text,
+                          userId: context.read<AuthBloc>().state.userModel.userId,
                         );
                         context.read<MyVacancyBloc>().add(MyAddVacancyEvent(vacancyModel:vacancyModel));
                         ScaffoldMessenger.of(context).showSnackBar(

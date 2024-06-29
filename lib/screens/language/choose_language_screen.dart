@@ -1,9 +1,13 @@
+import 'package:e_worker/bloc/auth/auth_bloc.dart';
 import 'package:e_worker/data/local/storage_repository.dart';
+import 'package:e_worker/data/model/user/user_model.dart';
 import 'package:e_worker/screens/tab_box/tab_box_screen.dart';
 import 'package:e_worker/utils/colors/app_colors.dart';
 import 'package:e_worker/utils/styles/app_text_style.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class ChooseLanguage extends StatefulWidget {
@@ -16,6 +20,9 @@ class ChooseLanguage extends StatefulWidget {
 class _ChooseLanguageState extends State<ChooseLanguage> {
   bool active1=false;
   bool active2=false;
+
+  TextEditingController nameController=TextEditingController();
+  UserModel userModel=UserModel.initial();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -26,6 +33,25 @@ class _ChooseLanguageState extends State<ChooseLanguage> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
+              TextField(
+                style: AppTextStyle.urbanistMedium,
+                controller: nameController,
+                decoration: InputDecoration(
+                  hintText: "Enter name",
+                  hintStyle: AppTextStyle.urbanistMedium.copyWith(
+                    color: Colors.black,
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(16.r),
+                    borderSide: BorderSide(width:1.sp,color: Colors.white)
+                  ),
+                  enabledBorder:OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(16.r),
+                      borderSide: BorderSide(width:1.sp,color: Colors.white)
+                  ),
+                ),
+              ),
+              SizedBox(height: 16.h,),
               ListTile(
                 trailing:Radio(value:true, groupValue:active1, onChanged:(v){
                 },),
@@ -71,6 +97,12 @@ class _ChooseLanguageState extends State<ChooseLanguage> {
               SizedBox(
                 width: double.infinity,
                 child: TextButton(onPressed:(){
+                  userModel=userModel.copyWith(
+                    username: nameController.text,
+                    authUid:DateTime.now().toString()
+                  );
+                  StorageRepository.setString(key: 'authId', value:userModel.authUid);
+                  context.read<AuthBloc>().add(RegisterUserEvent(userModel:userModel));
                   StorageRepository.setBool(key: "isEnter", value:true);
                   StorageRepository.setInt(key: "value", value:(active1)?1:2);
                   Navigator.pushReplacement(context,MaterialPageRoute(builder: (context){

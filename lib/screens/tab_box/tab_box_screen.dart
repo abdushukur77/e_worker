@@ -1,3 +1,4 @@
+import 'package:e_worker/bloc/auth/auth_bloc.dart';
 import 'package:e_worker/bloc/image/image_bloc.dart';
 import 'package:e_worker/bloc/vacancy/vacancy_bloc.dart';
 import 'package:e_worker/bloc/vacancy/vacancy_event.dart';
@@ -26,7 +27,7 @@ class _TabBoxScreenState extends State<TabBoxScreen> {
   @override
   Widget build(BuildContext context) {
     return AnnotatedRegion(
-      value: SystemUiOverlayStyle(
+      value: const SystemUiOverlayStyle(
         statusBarColor: Colors.black,
         statusBarIconBrightness: Brightness.light,
         systemNavigationBarColor: Colors.black,

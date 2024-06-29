@@ -1,6 +1,5 @@
 import 'package:e_worker/data/model/network_response.dart';
 import 'package:equatable/equatable.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../data/model/user/user_model.dart';
@@ -13,6 +12,7 @@ part 'auth_state.dart';
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
   AuthBloc({required this.authRepository}) : super(AuthState.init()) {
     on<RegisterUserEvent>(addUser);
+    on<GetUserEvent>(getUser);
   }
 
 
@@ -26,6 +26,17 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     else
     {
       emit(state.copyWith(errorMessage:"Error"));
+    }
+  }
+
+  getUser(GetUserEvent event,emit)async{
+    emit(state.copyWith(statusMessage:"loading"));
+    NetworkResponse networkResponse=await authRepository.getUser();
+    if(networkResponse.errorText.isEmpty){
+      emit(state.copyWith(userModel: networkResponse.data[0] as UserModel,statusMessage: "success"));
+    }
+    else{
+      emit(state.copyWith(errorMessage:"Error",));
     }
   }
 }

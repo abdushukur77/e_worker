@@ -1,8 +1,10 @@
 
+import 'package:e_worker/bloc/auth/auth_bloc.dart';
 import 'package:e_worker/bloc/my_vacancy/my_vacancy_bloc.dart';
 import 'package:e_worker/bloc/places/search_bloc.dart';
 import 'package:e_worker/bloc/places/search_event.dart';
 import 'package:e_worker/data/local/storage_repository.dart';
+import 'package:e_worker/data/repository/auth_repository.dart';
 import 'package:e_worker/data/repository/my_vacancy_repository.dart';
 import 'package:e_worker/screens/language/choose_language_screen.dart';
 import 'package:e_worker/screens/splash_screen/splash_screen.dart';
@@ -38,10 +40,14 @@ class App extends StatelessWidget {
         RepositoryProvider(
           create: (_) => MyVacancyRepository(),
         ),
+        RepositoryProvider(
+          create: (_) => AuthRepository(),
+        ),
       ],
       child: MultiBlocProvider(
         providers: [
           BlocProvider(create: (context) => ImageBloc()),
+          BlocProvider(create: (context) => AuthBloc(authRepository:context.read<AuthRepository>())..add(GetUserEvent())),
           BlocProvider(create: (context) => CountryBloc()..add(GetAllCountry())),
           BlocProvider(
             create: (context) => VacancyBloc(
