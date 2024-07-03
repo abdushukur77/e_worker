@@ -77,8 +77,8 @@ class GetVacanciesByCategoryId extends VacancyEvent {
 
 class GetVacanciesBySubCategoryId extends VacancyEvent {
   final String subCategoryId;
-
-  GetVacanciesBySubCategoryId({required this.subCategoryId});
+  final bool isValid;
+  GetVacanciesBySubCategoryId({required this.subCategoryId,required this.isValid});
 
   @override
   List<Object?> get props => [subCategoryId];

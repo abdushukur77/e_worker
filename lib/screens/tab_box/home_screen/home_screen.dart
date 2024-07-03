@@ -1,10 +1,7 @@
 import 'package:e_worker/bloc/category/categories_event.dart';
-import 'package:e_worker/bloc/vacancy/vacancy_bloc.dart';
-import 'package:e_worker/bloc/vacancy/vacancy_event.dart';
 import 'package:e_worker/data/model/forms_status.dart';
 import 'package:e_worker/screens/sub_categories/sub_categoreis_screen.dart';
 import 'package:e_worker/screens/tab_box/home_screen/widgets/banner_item.dart';
-import 'package:e_worker/screens/vacanies_screen/vacanies_screen.dart';
 import 'package:e_worker/utils/colors/app_colors.dart';
 import 'package:e_worker/utils/styles/app_text_style.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -79,6 +76,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         context.read<CategoriesBloc>().add(GetSubCategories(parentId:state.categories[activeIndex].id));
                         Navigator.push(context,MaterialPageRoute(builder:(context){
                           return  SubCategoriesScreen(
+                            isLast:activeIndex==2,
                             categoryName: state.categories[activeIndex].name,
                           );
                         }));

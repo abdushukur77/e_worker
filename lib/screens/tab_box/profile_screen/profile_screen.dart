@@ -58,7 +58,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   ),
                 ),
                 SizedBox(height: 16.h,),
-                Text("${"name".tr()}:${state.userModel.username}",textAlign:TextAlign.center,style: AppTextStyle.urbanistMedium.copyWith(
+                Text("    ${"name".tr()}:${state.userModel.username}",textAlign:TextAlign.center,style: AppTextStyle.urbanistMedium.copyWith(
                     color: AppColors.black,fontSize:20.sp
                 ),),
                 SizedBox(height: 20.h,),

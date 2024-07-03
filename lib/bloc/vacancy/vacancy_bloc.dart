@@ -58,7 +58,7 @@ class VacancyBloc extends Bloc<VacancyEvent, VacancyState> {
 
     if (response.errorText.isEmpty) {
       List<VacancyModel> vacancies = response.data as List<VacancyModel>;
-      emit(state.copyWith(vacancies: vacancies, status: FormsStatus.success));
+      emit(state.copyWith(vacancies: vacancies.where((element) => element.isValid==event.isValid).toList(), status: FormsStatus.success));
     } else {
       emit(state.copyWith(
           status: FormsStatus.error, errorMessage: response.errorText));
