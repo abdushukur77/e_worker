@@ -1,6 +1,8 @@
+import 'package:e_worker/bloc/category/categories_event.dart';
 import 'package:e_worker/bloc/vacancy/vacancy_bloc.dart';
 import 'package:e_worker/bloc/vacancy/vacancy_event.dart';
 import 'package:e_worker/data/model/forms_status.dart';
+import 'package:e_worker/screens/sub_categories/sub_categoreis_screen.dart';
 import 'package:e_worker/screens/tab_box/home_screen/widgets/banner_item.dart';
 import 'package:e_worker/screens/vacanies_screen/vacanies_screen.dart';
 import 'package:e_worker/utils/colors/app_colors.dart';
@@ -74,14 +76,11 @@ class _HomeScreenState extends State<HomeScreen> {
                       onTap: () {
                         activeIndex = index;
                         setState(() {});
-                        context.read<VacancyBloc>().add(
-                            GetVacanciesByCategoryId(
-                                categoryId: state.categories[activeIndex].id));
-                        Navigator.push(context,
-                            MaterialPageRoute(builder: (context) {
-                          return VacanciesScreen(
-                              categoryId: state.categories[activeIndex].id,
-                              name: state.categories[activeIndex].name);
+                        context.read<CategoriesBloc>().add(GetSubCategories(parentId:state.categories[activeIndex].id));
+                        Navigator.push(context,MaterialPageRoute(builder:(context){
+                          return  SubCategoriesScreen(
+                            categoryName: state.categories[activeIndex].name,
+                          );
                         }));
                       },
                       child: Container(

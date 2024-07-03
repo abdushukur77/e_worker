@@ -8,8 +8,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-
-
 class DistrictWidget extends StatefulWidget {
   const DistrictWidget({super.key, required this.districtController});
   final TextEditingController districtController ;
@@ -61,7 +59,7 @@ class _DistrictWidgetState extends State<DistrictWidget> {
                                   setState(() {});
                                   widget.districtController.text=location;
                                   Navigator.pop(context);
-                                }, isActive: location==state.district[index].name,title:state.district[index].name, color:(location!=state.district[index].name)?Colors.white:Colors.blue);
+                                }, isActive: location==state.district[index].name,title:state.district[index].name.tr(), color:(location!=state.district[index].name)?Colors.white:Colors.blue);
                               }),
                               const SizedBox(height: 20),
                               ElevatedButton(
@@ -86,7 +84,7 @@ class _DistrictWidgetState extends State<DistrictWidget> {
                   ),
                 );
               });
-            }, child:Text((location.isEmpty)?"choose_place2".tr():location,style: AppTextStyle.urbanistRegular.copyWith(color:Colors.white),)),
+            }, child:Text((location.isEmpty)?"choose_place2".tr():location.tr(),style: AppTextStyle.urbanistRegular.copyWith(color:Colors.white),)),
       );
     });
   }

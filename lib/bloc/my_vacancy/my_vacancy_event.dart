@@ -21,7 +21,9 @@ class ChangeToInitialEvent extends MyVacancyEvent {
 
 
 class MyGetVacancyEvent extends MyVacancyEvent {
-  MyGetVacancyEvent();
+  final String userId;
+
+  MyGetVacancyEvent({required this.userId});
 
   @override
   List<Object?> get props => [];

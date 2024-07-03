@@ -60,7 +60,7 @@ class App extends StatelessWidget {
             create: (context) => MyVacancyBloc(
               myVacancyRepository: context.read<MyVacancyRepository>(),
             )..add(
-              MyGetVacancyEvent(),
+              MyGetVacancyEvent(userId: context.read<AuthBloc>().state.userModel.userId),
             ),
           ),
           BlocProvider(

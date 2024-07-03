@@ -39,4 +39,20 @@ class AuthRepository {
       return NetworkResponse(errorText: "Error");
     }
   }
+  Future<NetworkResponse> updateUser(
+      {required UserModel userModel}) async {
+    try {
+      await FirebaseFirestore.instance
+          .collection(AppConstants.users)
+          .doc(userModel.userId)
+          .update(
+        userModel.toJsonForUpdate(),
+      );
+      return NetworkResponse(data:userModel);
+    } on FirebaseException catch (e) {
+      return NetworkResponse(errorText: "Firestore xatosi: ${e.message}");
+    } catch (e) {
+      return NetworkResponse(errorText: e.toString());
+    }
+  }
 }

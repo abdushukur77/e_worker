@@ -13,6 +13,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   AuthBloc({required this.authRepository}) : super(AuthState.init()) {
     on<RegisterUserEvent>(addUser);
     on<GetUserEvent>(getUser);
+    on<UpdateUserEvent>(updateUser);
   }
 
 
@@ -37,6 +38,16 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     }
     else{
       emit(state.copyWith(errorMessage:"Error",));
+    }
+  }
+
+  updateUser(UpdateUserEvent event,emit)async{
+    NetworkResponse networkResponse=await authRepository.updateUser(userModel:event.userModel);
+    if(networkResponse.errorText.isEmpty){
+      emit(state.copyWith(userModel: networkResponse.data));
+    }
+    else{
+      emit(state.copyWith(errorMessage: "Error"));
     }
   }
 }

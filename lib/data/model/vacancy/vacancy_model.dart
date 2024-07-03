@@ -55,6 +55,7 @@ class VacancyModel {
 
   Map<String, dynamic> toJsonForUpdate() => {
         'position': position,
+        'sub_category_id': subCategoryId,
         'brand_image_url': brandImage,
         'category_id': categoryId,
         'user_id': userId,

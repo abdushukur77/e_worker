@@ -224,7 +224,8 @@ class _CreateScreenState extends State<CreateScreen> {
                         style: AppTextStyle.urbanistMedium.copyWith(color: AppColors.white, fontSize: 16.w),
                       ),
                     ),
-                  )
+                  ),
+                  SizedBox(height: 40.h,),
                 ],
               ),
             );

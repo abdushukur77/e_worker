@@ -32,7 +32,7 @@ class MyVacancyBloc extends Bloc<MyVacancyEvent, MyVacancyState> {
   _getVacancy(MyGetVacancyEvent event,emit)async{
     emit(state.copyWith(status: FormsStatus.loading,statusMessage: ""));
     debugPrint("${myVacancyRepository.getAllVacancies().first}");
-    emit(state.copyWith(vacancies: await myVacancyRepository.getAllVacancies().first,status: FormsStatus.success));
+    emit(state.copyWith(vacancies: (await myVacancyRepository.getAllVacancies().first).where((element) => element.userId==event.userId).toList(),status: FormsStatus.success));
 
   }
 

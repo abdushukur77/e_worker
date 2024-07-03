@@ -30,19 +30,22 @@ class FirstVacancyPage extends StatefulWidget {
 class _FirstVacancyPageState extends State<FirstVacancyPage> {
   String currentCategoryId = '';
   String field = '';
+  int activeIndex=-1;
   String direction = '';
   String subCategoryId = '';
   String categoryId = '';
+  String shopping='';
+  List<String> shop=[
+    "Chakana savdo",
+    "Ulgurchi savdo"
+  ];
+
 
   @override
   Widget build(BuildContext context) {
     context.read<CategoriesBloc>().add(
           GetCategories(),
         );
-    final firstFormKey = GlobalKey<FormState>();
-    final secondFormKey = GlobalKey<FormState>();
-    final TextEditingController positionController = TextEditingController();
-    final TextEditingController companyController = TextEditingController();
     return BlocBuilder<VacancyBloc, VacancyState>(
       builder: (context, state) {
         if (state is ImageLoading) {
@@ -129,7 +132,6 @@ class _FirstVacancyPageState extends State<FirstVacancyPage> {
                                                               value:currentCategoryId,
                                                               field: VacancyField.categoryId,
                                                             ),
-
                                                           );
                                                       context
                                                           .read<
@@ -191,6 +193,125 @@ class _FirstVacancyPageState extends State<FirstVacancyPage> {
                         );
                       },
                     ),
+                    Visibility(
+                        visible:currentCategoryId=='jC348EtHcOuFCwhCZylQ',
+                        child:Column(
+                          children: [
+                            SizedBox(height: 20.h,),
+                            Container(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(16.w),
+                                color: AppColors.c257CFF,
+                              ),
+                              width: double.infinity,
+                              height: 50.h,
+                              child: InkWell(
+                                borderRadius: BorderRadius.circular(16.w),
+                                onTap: () {
+                                  // colorsBool = true;
+                                  debugPrint(
+                                      "CURRENT CATEGORY ID: $currentCategoryId 0");
+                                  showMaterialModalBottomSheet(
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return SizedBox(
+                                        child: Column(
+                                          mainAxisSize: MainAxisSize.min,
+                                          children: [
+                                            Padding(
+                                              padding: EdgeInsets.symmetric(
+                                                  vertical: 15.h),
+                                              child: Container(
+                                                width: 50.w,
+                                                height: 10,
+                                                decoration: BoxDecoration(
+                                                    color: Colors.black,
+                                                    borderRadius:
+                                                    BorderRadius.circular(
+                                                        16.w)),
+                                              ),
+                                            ),
+                                            Container(
+                                              // height: 550.h,
+                                              padding: EdgeInsets.symmetric(
+                                                  horizontal: 20.w, vertical: 2.w),
+                                              child: SingleChildScrollView(
+                                                child: Column(
+                                                  children: <Widget>[
+                                                    ...List.generate(
+                                                        shop.length,
+                                                            (index) => YonalishTuri(
+                                                          isActive:shopping ==shop[
+                                                          index],
+                                                          onTap: () {
+                                                            setState(() {
+                                                              activeIndex=index;
+                                                              shopping =shop[
+                                                              index];
+                                                            });
+
+                                                            context
+                                                                .read<
+                                                                VacancyBloc>()
+                                                                .add(
+                                                              UpdateVacancyFieldEvent(
+                                                                value:activeIndex==0,
+                                                                field: VacancyField
+                                                                    .isValid,
+                                                              ),
+                                                            );
+                                                            Navigator.of(
+                                                                context)
+                                                                .pop();
+                                                          },
+                                                          title:shop[
+                                                          index].tr(),
+                                                          color:shop[index]==shopping
+                                                              ? AppColors
+                                                              .c257CFF
+                                                              : Colors.white,
+                                                        )),
+                                                    const SizedBox(height: 20),
+                                                    ElevatedButton(
+                                                      onPressed: () {
+                                                        Navigator.of(context).pop();
+                                                      },
+                                                      style: TextButton.styleFrom(
+                                                          backgroundColor:
+                                                          Colors.orange),
+                                                      child:Text(
+                                                        'close'.tr(),
+                                                        style:AppTextStyle.urbanistMedium.copyWith(
+                                                            color: AppColors.white
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      );
+                                    },
+                                    expand: false,
+                                    duration: const Duration(microseconds: 100),
+                                  );
+                                },
+                                child: Center(
+                                  child: Text(
+                                    shopping.isEmpty
+                                        ? "Choose".tr()
+                                        : shopping.tr(),
+                                    style: const TextStyle(
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        )),
                     SizedBox(
                       height: 20.h,
                     ),

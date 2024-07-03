@@ -36,7 +36,6 @@ class UserModel {
   Map<String, dynamic> toJsonForUpdate() => {
         "username": username,
         "phoneNumber": phoneNumber,
-        "authUid": authUid,
       };
 
   factory UserModel.fromJson(Map<String, dynamic> json) {

@@ -1,5 +1,8 @@
 import 'package:e_worker/bloc/auth/auth_bloc.dart';
+import 'package:e_worker/bloc/my_vacancy/my_vacancy_bloc.dart';
+import 'package:e_worker/bloc/my_vacancy/my_vacancy_event.dart';
 import 'package:e_worker/screens/languages/languages.dart';
+import 'package:e_worker/screens/tab_box/profile_screen/update_profile_screen.dart';
 import 'package:e_worker/utils/colors/app_colors.dart';
 import 'package:e_worker/utils/styles/app_text_style.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -21,7 +24,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   void initState() {
     setState(() {});
-    // TODO: implement
     super.initState();
   }
   @override
@@ -61,7 +63,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 ),),
                 SizedBox(height: 20.h,),
                 ListTile(
-                  onTap: (){},
+                  onTap: (){
+                    Navigator.push(context, MaterialPageRoute(builder: (context){
+                      return const UpdateProfileScreen();
+                    }));
+                  },
                   leading: Icon(Icons.settings,size: 25.sp,),
                   trailing: Icon(Icons.arrow_forward_ios_sharp,size: 25.sp,),
                   title: Text("setting".tr(),style: AppTextStyle.urbanistMedium.copyWith(
@@ -70,6 +76,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 ),
                 ListTile(
                   onTap: (){
+                    context.read<MyVacancyBloc>().add(MyGetVacancyEvent(userId:context.read<AuthBloc>().state.userModel.userId));
                     Navigator.push(context,MaterialPageRoute(builder: (context){
                       return const MyVacancyScreen();
                     }));
