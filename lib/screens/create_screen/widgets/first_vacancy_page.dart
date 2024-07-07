@@ -36,8 +36,8 @@ class _FirstVacancyPageState extends State<FirstVacancyPage> {
   String categoryId = '';
   String shopping='';
   List<String> shop=[
-    "Chakana savdo",
-    "Ulgurchi savdo"
+    "chakana".tr(),
+    "ulgurchi".tr()
   ];
 
 
@@ -73,7 +73,7 @@ class _FirstVacancyPageState extends State<FirstVacancyPage> {
                         return Container(
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(16.w),
-                            color: AppColors.c257CFF,
+                            color: (field.isEmpty)?AppColors.c_93B8FE:AppColors.c257CFF,
                           ),
                           width: double.infinity,
                           height: 50.h,
@@ -184,8 +184,8 @@ class _FirstVacancyPageState extends State<FirstVacancyPage> {
                             child: Center(
                               child: Text(
                                 field.isEmpty ? "choose_field".tr() : field.tr(),
-                                style: const TextStyle(
-                                  color: Colors.white,
+                                style: TextStyle(
+                                  color: Colors.white,fontSize: 16.sp
                                 ),
                               ),
                             ),
@@ -201,7 +201,7 @@ class _FirstVacancyPageState extends State<FirstVacancyPage> {
                             Container(
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(16.w),
-                                color: AppColors.c257CFF,
+                                color: (shopping.isEmpty)?AppColors.c_93B8FE:AppColors.c257CFF,
                               ),
                               width: double.infinity,
                               height: 50.h,
@@ -282,7 +282,7 @@ class _FirstVacancyPageState extends State<FirstVacancyPage> {
                                                       child:Text(
                                                         'close'.tr(),
                                                         style:AppTextStyle.urbanistMedium.copyWith(
-                                                            color: AppColors.white
+                                                            color: AppColors.white,
                                                         ),
                                                       ),
                                                     ),
@@ -301,10 +301,10 @@ class _FirstVacancyPageState extends State<FirstVacancyPage> {
                                 child: Center(
                                   child: Text(
                                     shopping.isEmpty
-                                        ? "Choose".tr()
+                                        ? "choose".tr()
                                         : shopping.tr(),
-                                    style: const TextStyle(
-                                      color: Colors.white,
+                                    style:  TextStyle(
+                                      color: Colors.white,fontSize: 16.sp
                                     ),
                                   ),
                                 ),
@@ -323,7 +323,7 @@ class _FirstVacancyPageState extends State<FirstVacancyPage> {
                         return Container(
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(16.w),
-                            color: AppColors.c257CFF,
+                            color: (direction.isEmpty)?AppColors.c_93B8FE:AppColors.c257CFF,
                           ),
                           width: double.infinity,
                           height: 50.h,
@@ -336,13 +336,13 @@ class _FirstVacancyPageState extends State<FirstVacancyPage> {
                               showMaterialModalBottomSheet(
                                 context: context,
                                 builder: (BuildContext context) {
-                                  return SizedBox(
+                                  return SingleChildScrollView(
                                     child: Column(
                                       mainAxisSize: MainAxisSize.min,
                                       children: [
                                         Padding(
-                                          padding: EdgeInsets.symmetric(
-                                              vertical: 15.h),
+                                          padding: EdgeInsets.only(
+                                              top: 30.h),
                                           child: Container(
                                             width: 50.w,
                                             height: 10,
@@ -357,77 +357,58 @@ class _FirstVacancyPageState extends State<FirstVacancyPage> {
                                           // height: 550.h,
                                           padding: EdgeInsets.symmetric(
                                               horizontal: 20.w, vertical: 2.w),
-                                          child: SingleChildScrollView(
-                                            child: Column(
-                                              children: <Widget>[
-                                                ...List.generate(
-                                                    state.subCategories.length,
-                                                    (index) => YonalishTuri(
-                                                      isActive: direction == state
-                                                          .subCategories[
-                                                      index]
-                                                          .name ,
-                                                          onTap: () {
-                                                            setState(() {
-                                                              subCategoryId = state
-                                                                  .subCategories[
-                                                                      index]
-                                                                  .id;
-                                                              direction = state
-                                                                  .subCategories[
-                                                                      index]
-                                                                  .name;
-                                                              widget.yonalishControler.text=direction.tr();
-
-                                                            });
-
-                                                            context
-                                                                .read<
-                                                                    VacancyBloc>()
-                                                                .add(
-                                                                  UpdateVacancyFieldEvent(
-                                                                    value: state
-                                                                        .subCategories[
-                                                                            index]
-                                                                        .id,
-                                                                    field: VacancyField
-                                                                        .subCategoryId,
-                                                                  ),
-                                                                );
-                                                            Navigator.of(
-                                                                    context)
-                                                                .pop();
-                                                          },
-                                                          title: state
-                                                              .subCategories[
-                                                                  index]
-                                                              .name.tr(),
-                                                          color: state
-                                                                      .subCategories[
-                                                                          index]
-                                                                      .id ==
-                                                                  subCategoryId
-                                                              ? AppColors
-                                                                  .c257CFF
-                                                              : Colors.white,
-                                                        )),
-                                                const SizedBox(height: 20),
-                                                ElevatedButton(
-                                                  onPressed: () {
-                                                    Navigator.of(context).pop();
-                                                  },
-                                                  style: TextButton.styleFrom(
-                                                      backgroundColor:
-                                                          Colors.orange),
-                                                  child:Text(
-                                                    'close'.tr(),
-                                                    style:AppTextStyle.urbanistMedium.copyWith(
-                                                      color: AppColors.white
-                                                    ),
+                                          child: Column(
+                                            children: <Widget>[
+                                              ...List.generate(
+                                                  state.subCategories.length,
+                                                  (index) => YonalishTuri(
+                                                    isActive: direction == state.subCategories[index].name ,
+                                                        onTap: () {
+                                                          setState(() {
+                                                            subCategoryId = state.subCategories[index].id;
+                                                            direction = state.subCategories[index].name;
+                                                            widget.yonalishControler.text=direction;
+                                                          });
+                                          
+                                                          context.read<VacancyBloc>().add(UpdateVacancyFieldEvent(
+                                                                  value: state.subCategories[index].id,
+                                                                  field: VacancyField.subCategoryId,
+                                                                ),
+                                                              );
+                                                          Navigator.of(
+                                                                  context)
+                                                              .pop();
+                                                        },
+                                                        title: state
+                                                            .subCategories[
+                                                                index]
+                                                            .name.tr(),
+                                                        color: state
+                                                                    .subCategories[
+                                                                        index]
+                                                                    .id ==
+                                                                subCategoryId
+                                                            ? AppColors
+                                                                .c257CFF
+                                                            : Colors.white,
+                                                      )),
+                                              const SizedBox(height: 20),
+                                              ElevatedButton(
+                                                onPressed: () {
+                                                  Navigator.of(context).pop();
+                                                },
+                                                style: TextButton.styleFrom(
+                                                    backgroundColor:
+                                                        Colors.orange),
+                                                child:Text(
+                                                  'close'.tr(),
+                                                  style:AppTextStyle.urbanistMedium.copyWith(
+                                                    color: AppColors.white
                                                   ),
                                                 ),
-                                              ],
-                                            ),
+                                              ),
+                                              SizedBox(height: 20.h,)
+                                            ],
                                           ),
                                         ),
                                       ],
@@ -443,8 +424,8 @@ class _FirstVacancyPageState extends State<FirstVacancyPage> {
                                 direction.isEmpty
                                     ? "choose_burn".tr()
                                     : direction.tr(),
-                                style: const TextStyle(
-                                  color: Colors.white,
+                                style:  TextStyle(
+                                  color: Colors.white,fontSize: 16.sp
                                 ),
                               ),
                             ),

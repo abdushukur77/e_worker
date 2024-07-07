@@ -1,31 +1,31 @@
-import 'package:e_worker/bloc/places/search_bloc.dart';
-import 'package:e_worker/bloc/places/search_event.dart';
-import 'package:e_worker/bloc/places/search_state.dart';
-import 'package:e_worker/screens/create_screen/widgets/yonalish_turi.dart';
-import 'package:e_worker/utils/colors/app_colors.dart';
-import 'package:e_worker/utils/styles/app_text_style.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../../../bloc/places/search_bloc.dart';
+import '../../../bloc/places/search_event.dart';
+import '../../../bloc/places/search_state.dart';
+import '../../../utils/colors/app_colors.dart';
+import '../../../utils/styles/app_text_style.dart';
+import '../../create_screen/widgets/yonalish_turi.dart';
 
-
-class LocationWidget extends StatefulWidget {
-  const LocationWidget({super.key, required this.locationController});
-  final TextEditingController locationController ;
+class LocationWidgets extends StatefulWidget {
+  const LocationWidgets({super.key,required this.function});
+  final Function(String s) function;
 
   @override
-  State<LocationWidget> createState() => _LocationWidgetState();
+  State<LocationWidgets> createState() => _LocationWidgetsState();
 }
 
-class _LocationWidgetState extends State<LocationWidget> {
-  String location='';
+class _LocationWidgetsState extends State<LocationWidgets> {
+  String location="";
   int activeIndex=-1;
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<CountryBloc,CountryState>(builder:(
-    context,state){
+        context,state){
       return Container(
         margin: EdgeInsets.symmetric(horizontal: 24.w),
         width:double.infinity,
@@ -57,6 +57,28 @@ class _LocationWidgetState extends State<LocationWidget> {
                         child: SingleChildScrollView(
                           child: Column(
                             children: <Widget>[
+                              SizedBox(
+                                width: double.infinity,
+                                child: TextButton(onPressed:(){
+                                  location="";
+                                  widget.function.call("");
+                                  setState(() {});
+                                  Navigator.pop(context);
+                                },style: TextButton.styleFrom(
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(4.r)
+                                  ),
+                                  backgroundColor: (location.isEmpty)?Colors.blue:Colors.white,
+                                  side: BorderSide(width: 1.sp,color: Colors.blue)
+                                ),
+                                    child:Row(
+                                      children: [
+                                        Text("all".tr(),style: AppTextStyle.urbanistRegular.copyWith(
+                                          color: (location.isEmpty)?AppColors.white:AppColors.black,fontSize:20.sp
+                                        ),),
+                                      ],
+                                    )),
+                              ),
                               ...List.generate(state.country.length, (index){
                                 return YonalishTuri(onTap: (){
                                   activeIndex=index;
@@ -64,7 +86,7 @@ class _LocationWidgetState extends State<LocationWidget> {
                                   context.read<CountryBloc>().add(GetById(id:state.country[activeIndex].id));
                                   location=state.country[index].name;
                                   setState(() {});
-                                  widget.locationController.text=location;
+                                  widget.function.call(location);
                                   Navigator.pop(context);
                                 }, isActive: location==state.country[index].name,title:state.country[index].name.tr(), color:(location!=state.country[index].name)?Colors.white:Colors.blue);
                               }),
@@ -76,11 +98,15 @@ class _LocationWidgetState extends State<LocationWidget> {
                                 style:TextButton.styleFrom(
                                     backgroundColor: Colors.orange
                                 ),
-                                child:Text(
-                                  'close'.tr(),
-                                  style: AppTextStyle.urbanistMedium.copyWith(
-                                      color: AppColors.white
-                                  ),
+                                child:Column(
+                                  children: [
+                                    Text(
+                                      'close'.tr(),
+                                      style: AppTextStyle.urbanistMedium.copyWith(
+                                          color: AppColors.white
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               ),
                             ],
@@ -91,7 +117,7 @@ class _LocationWidgetState extends State<LocationWidget> {
                   ),
                 );
               });
-            }, child:Text((location.isEmpty)?"choose_place".tr():location.tr(),style: AppTextStyle.urbanistRegular.copyWith(color:Colors.white,fontSize:16.sp),)),
+            }, child:Text((location.isEmpty)?"all".tr():location.tr(),style: AppTextStyle.urbanistRegular.copyWith(color:Colors.white,fontSize:16.sp),)),
       );
     });
   }

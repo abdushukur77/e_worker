@@ -1,10 +1,10 @@
-import 'package:e_worker/bloc/auth/auth_bloc.dart';
 import 'package:e_worker/bloc/image/image_bloc.dart';
 import 'package:e_worker/bloc/vacancy/vacancy_bloc.dart';
 import 'package:e_worker/bloc/vacancy/vacancy_event.dart';
 import 'package:e_worker/screens/create_screen/create_screen.dart';
 import 'package:e_worker/screens/tab_box/home_screen/home_screen.dart';
 import 'package:e_worker/screens/tab_box/profile_screen/profile_screen.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -48,14 +48,14 @@ class _TabBoxScreenState extends State<TabBoxScreen> {
               currentIndex = index;
             });
           },
-          items: const [
+          items:[
             BottomNavigationBarItem(
-              icon: Icon(Icons.home_rounded),
-              label: 'Home',
+              icon: const Icon(Icons.home_rounded),
+              label: 'homes'.tr(),
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.person_rounded),
-              label: 'Profile',
+              icon: const Icon(Icons.person_rounded),
+              label: "profile".tr(),
             ),
           ],
         ),

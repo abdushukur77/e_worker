@@ -27,7 +27,7 @@ class _DistrictWidgetState extends State<DistrictWidget> {
         width:double.infinity,
         child: TextButton(
             style: TextButton.styleFrom(
-                backgroundColor:AppColors.c257CFF,
+                backgroundColor:(location.isEmpty)?AppColors.c_93B8FE:AppColors.c257CFF,
                 padding: EdgeInsets.symmetric(vertical: 16.h),
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(16.r)

@@ -188,7 +188,7 @@ class _CreateScreenState extends State<CreateScreen> {
                           UpdateVacancyFieldEvent(value:informationController.text, field:VacancyField.description),
                         );
                         context.read<VacancyBloc>().add(
-                          UpdateVacancyFieldEvent(value:"${locationController.text.tr()} ${districtController.text}", field:VacancyField.position),
+                          UpdateVacancyFieldEvent(value:"${locationController.text} ${districtController.text}", field:VacancyField.position),
                         );
                         context.read<VacancyBloc>().add(
                           UpdateVacancyFieldEvent(value:DateTime.now().toString(), field:VacancyField.createdAt),

@@ -8,7 +8,6 @@ import "package:easy_localization/easy_localization.dart";
 import "package:flutter/material.dart";
 import "package:flutter_bloc/flutter_bloc.dart";
 import "package:flutter_screenutil/flutter_screenutil.dart";
-
 import "../../bloc/vacancy/vacancy_bloc.dart";
 import "../../bloc/vacancy/vacancy_event.dart";
 import "../vacanies_screen/vacanies_screen.dart";
@@ -53,7 +52,8 @@ class _SubCategoriesScreenState extends State<SubCategoriesScreen> {
               children: [
                 Visibility(
                     visible:widget.isLast,
-                    child:Padding(
+                    child:Container(
+                      color: Colors.white,
                       padding: EdgeInsets.symmetric(horizontal: 24.w,vertical: 16.h),
                       child: Row(children: [
                         TextButton(onPressed: (){
@@ -64,8 +64,8 @@ class _SubCategoriesScreenState extends State<SubCategoriesScreen> {
                                 backgroundColor:(active==0)?Colors.blue:Colors.white,
                                 side: BorderSide(width: 2.w,color: Colors.blue)
                             ),
-                            child:Text("Chakana savdo",style: AppTextStyle.urbanistRegular.copyWith(
-                                color: (active==0)?AppColors.white:AppColors.black,fontSize:18.sp
+                            child:Text("chakana".tr(),style: AppTextStyle.urbanistRegular.copyWith(
+                                color: (active==0)?AppColors.white:AppColors.black,fontSize:14.sp
                             ),)),
                         const Spacer(),
                         TextButton(onPressed: (){
@@ -76,8 +76,8 @@ class _SubCategoriesScreenState extends State<SubCategoriesScreen> {
                                 backgroundColor:(active==1)?Colors.blue:Colors.white,
                                 side: BorderSide(width: 2.w,color: Colors.blue)
                             ),
-                            child:Text("Ulgurchi savdo",style: AppTextStyle.urbanistRegular.copyWith(
-                                color:(active==1)?AppColors.white:AppColors.black,fontSize:18.sp
+                            child:Text("ulgurchi".tr(),style: AppTextStyle.urbanistRegular.copyWith(
+                                color:(active==1)?AppColors.white:AppColors.black,fontSize:14.sp
                             ))),
                       ],),
                     )),

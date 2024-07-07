@@ -28,7 +28,7 @@ class YonalishTuri extends StatelessWidget {
                   20.w,
                   vertical: 5.h),
               child: Text(
-                title,style:TextStyle(color: (isActive)?Colors.white:Colors.black,fontSize: 20.w),
+                title,style:TextStyle(color: (isActive)?Colors.white:Colors.black,fontSize: 20.sp),
               ),
             ),
           ),

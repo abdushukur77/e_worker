@@ -200,7 +200,7 @@ VALUES (15, 1, 'amudaryo_tumani'),
        (205, 14, 'chilonzor_tumani'),
        (206, 14, 'shayxontohur_tumani'),
        (207, 14, 'yunusobod_tumani'),
-       (208, 14, 'yakkasaroy_tumani'),
+       (208, 14, 'yakkasaroy_tumani');
 
 
 

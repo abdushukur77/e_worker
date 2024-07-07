@@ -112,7 +112,7 @@ class _TakeImageWidgetState extends State<TakeImageWidget> {
                 borderRadius: BorderRadius.circular(16.w),
               ),
               padding: EdgeInsets.symmetric(vertical: 12.h),
-              backgroundColor: AppColors.c257CFF,
+              backgroundColor:(imageUrl.isEmpty)?AppColors.c_93B8FE:AppColors.c257CFF,
             ),
             child: Text(
               'choose_picture'.tr(),
@@ -137,7 +137,7 @@ class _TakeImageWidgetState extends State<TakeImageWidget> {
       for (var image in images.take(2)) {
         storagePath.add("files/images/${image.name}");
       }
-      context.read<ImageBloc>().add(
+      context.read< ImageBloc>().add(
         UploadImage(
           pickedFile: images,
           storagePath: storagePath,
