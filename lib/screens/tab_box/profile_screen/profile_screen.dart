@@ -2,6 +2,7 @@ import 'package:e_worker/bloc/auth/auth_bloc.dart';
 import 'package:e_worker/bloc/my_vacancy/my_vacancy_bloc.dart';
 import 'package:e_worker/bloc/my_vacancy/my_vacancy_event.dart';
 import 'package:e_worker/screens/languages/languages.dart';
+import 'package:e_worker/screens/tab_box/profile_screen/money_screen.dart';
 import 'package:e_worker/screens/tab_box/profile_screen/update_profile_screen.dart';
 import 'package:e_worker/utils/colors/app_colors.dart';
 import 'package:e_worker/utils/styles/app_text_style.dart';
@@ -100,6 +101,18 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   leading: Icon(Icons.language,size: 25.sp,),
                   trailing: Icon(Icons.arrow_forward_ios_sharp,size: 25.sp,),
                   title: Text("language".tr(),style: AppTextStyle.urbanistMedium.copyWith(
+                      color: AppColors.black,fontSize:20.sp
+                  ),),
+                ),
+                ListTile(
+                  onTap: (){
+                    Navigator.push(context,MaterialPageRoute(builder: (context){
+                      return const MoneyScreen();
+                    }));
+                  },
+                  leading: Icon(Icons.monetization_on,size: 25.sp,),
+                  trailing: Icon(Icons.arrow_forward_ios_sharp,size: 25.sp,),
+                  title: Text("hisob".tr(),style: AppTextStyle.urbanistMedium.copyWith(
                       color: AppColors.black,fontSize:20.sp
                   ),),
                 ),
